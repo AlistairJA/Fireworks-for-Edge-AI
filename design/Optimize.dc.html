@@ -1,0 +1,319 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+  <style>
+    body { margin: 0; background: #0b0d10; }
+    * { box-sizing: border-box; }
+    a { color: #ccff4d; text-decoration: none; }
+    a:hover { color: #e2ff96; }
+    .lbl { font: 500 10px/1 'Barlow Semi Condensed', 'Helvetica Neue', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; color: #626b75; }
+    .mono { font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace; font-variant-numeric: tabular-nums; }
+    .panel { background: #121519; border: 1px solid #262c34; border-radius: 3px; }
+    .rail-btn:hover { background: #1d2228; }
+    .pass:hover { border-color: #394149; }
+  </style>
+</helmet>
+
+<div style="--accent: {{accent}}; width: 1440px; height: 900px; background: #0b0d10; color: #e6e9ec; font-family: 'Barlow Semi Condensed', 'Helvetica Neue', sans-serif; display: flex; flex-direction: column; overflow: hidden;">
+
+  <div style="height: 52px; flex-shrink: 0; border-bottom: 1px solid #262c34; background: #0e1114; display: flex; align-items: center; gap: 20px; padding: 0 18px;">
+    <div style="display: flex; align-items: center; gap: 9px;">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M2 12h4l3-8 5 16 3-8h5"/></svg>
+      <span style="font-size: 15px; font-weight: 600; letter-spacing: 0.13em;">CADENCE</span>
+    </div>
+    <div style="width: 1px; height: 20px; background: #262c34;"></div>
+    <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #98a2ac;">
+      <span>Runs</span><span style="color: #3d444c;">/</span>
+      <span class="mono" style="font-size: 12px;">pi0-fast-droid</span><span style="color: #3d444c;">/</span>
+      <span class="mono" style="font-size: 12px;">#2847</span><span style="color: #3d444c;">/</span>
+      <span style="color: #e6e9ec;">Optimize</span>
+    </div>
+    <div style="flex-grow: 1;"></div>
+    <div style="display: flex; align-items: center; gap: 7px; padding: 4px 10px; border: 1px solid #2f4a33; background: #101711; border-radius: 3px;">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#5ddb8a" stroke-width="3"><path d="m4 12 6 6L20 6"/></svg>
+      <span class="mono" style="font-size: 11px; color: #5ddb8a;">Search converged · 1,284 configs measured on board</span>
+    </div>
+  </div>
+
+  <div style="flex-grow: 1; display: flex; min-height: 0;">
+
+    <div style="width: 56px; flex-shrink: 0; border-right: 1px solid #262c34; background: #0e1114; display: flex; flex-direction: column; align-items: center; gap: 4px; padding-top: 12px;">
+      <div class="rail-btn" style="width: 38px; height: 38px; border-radius: 3px; display: flex; align-items: center; justify-content: center; border-left: 2px solid transparent; cursor: pointer;">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#626b75" stroke-width="1.8"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg>
+      </div>
+      <div class="rail-btn" style="width: 38px; height: 38px; border-radius: 3px; display: flex; align-items: center; justify-content: center; border-left: 2px solid transparent; cursor: pointer;">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#626b75" stroke-width="1.8"><rect x="6" y="6" width="12" height="12" rx="1"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg>
+      </div>
+      <div class="rail-btn" style="width: 38px; height: 38px; border-radius: 3px; display: flex; align-items: center; justify-content: center; background: #1d2228; border-left: 2px solid var(--accent); cursor: pointer;">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>
+      </div>
+      <div class="rail-btn" style="width: 38px; height: 38px; border-radius: 3px; display: flex; align-items: center; justify-content: center; border-left: 2px solid transparent; cursor: pointer;">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#626b75" stroke-width="1.8"><path d="M8 5 3 12l5 7M16 5l5 7-5 7"/></svg>
+      </div>
+    </div>
+
+    <div style="flex-grow: 1; min-width: 0; padding: 16px 18px; display: flex; flex-direction: column; gap: 12px;">
+
+      <!-- hero -->
+      <div style="height: 92px; flex-shrink: 0; display: flex; gap: 10px;">
+        <div class="panel" style="width: 340px; flex-shrink: 0; padding: 12px 15px; display: flex; flex-direction: column; justify-content: center; border-color: #3d4a2a; background: #14170f;">
+          <div class="lbl">Faster than your baseline</div>
+          <div style="display: flex; align-items: baseline; gap: 10px; margin-top: 4px;">
+            <span class="mono" style="font-size: 40px; font-weight: 500; color: var(--accent); line-height: 1;">{{speedup}}</span>
+            <span class="mono" style="font-size: 16px; color: #98a2ac;">×</span>
+            <div style="flex-grow: 1;"></div>
+            <div style="text-align: right;">
+              <div class="mono" style="font-size: 13px; color: #e6e9ec;">44.2 → {{msAfter}} ms</div>
+              <div class="mono" style="font-size: 11px; color: #626b75;">run #2847 baseline</div>
+            </div>
+          </div>
+        </div>
+        <sc-for list="{{hero}}" as="h" hint-placeholder-count="4">
+          <div class="panel" style="flex-grow: 1; padding: 11px 13px; display: flex; flex-direction: column; justify-content: center;">
+            <div class="lbl">{{h.k}}</div>
+            <div style="display: flex; align-items: baseline; gap: 6px; margin-top: 5px;">
+              <span class="mono" style="font-size: 13px; color: #626b75;">{{h.before}}</span>
+              <svg width="13" height="9" viewBox="0 0 18 10" fill="none" stroke="#3d444c" stroke-width="1.6"><path d="M0 5h15M12 1.5 15.5 5 12 8.5"/></svg>
+              <span class="mono" style="font-size: 22px; font-weight: 500; color: {{h.fg}}; line-height: 1;">{{h.after}}</span>
+              <span class="mono" style="font-size: 11px; color: #626b75;">{{h.u}}</span>
+            </div>
+            <div class="mono" style="font-size: 10px; color: {{h.subFg}}; margin-top: 5px;">{{h.sub}}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- waterfall + ship -->
+      <div style="height: 330px; flex-shrink: 0; display: flex; gap: 12px;">
+
+        <div class="panel" style="flex-grow: 1; min-width: 0; padding: 13px 16px; display: flex; flex-direction: column;">
+          <div style="display: flex; align-items: center; gap: 10px;">
+            <span class="lbl" style="color: #e6e9ec;">Where the 21.4 ms went</span>
+            <div style="flex-grow: 1;"></div>
+            <span class="mono" style="font-size: 10px; color: #626b75;">every bar re-measured on the board, not modelled</span>
+          </div>
+
+          <div style="flex-grow: 1; display: flex; gap: 14px; margin-top: 16px; position: relative; padding-bottom: 34px;">
+            <div style="position: absolute; left: 0; right: 0; bottom: {{deadlineBottom}}; border-top: 1px dashed #f2685c; z-index: 2;">
+              <span class="mono" style="position: absolute; right: 0; top: -13px; font-size: 9px; color: #f2685c;">30 Hz deadline · 33.3 ms</span>
+            </div>
+
+            <sc-for list="{{wf}}" as="b" hint-placeholder-count="6">
+              <div style="flex-grow: 1; position: relative; height: 100%;">
+                <div style="position: absolute; left: 0; right: 0; bottom: {{b.bottom}}; height: {{b.height}}; background: {{b.fill}}; border: 1px solid {{b.stroke}}; border-radius: 2px;"></div>
+                <div style="position: absolute; left: 0; right: 0; bottom: {{b.labelBottom}}; text-align: center;">
+                  <span class="mono" style="font-size: 12px; color: {{b.valFg}};">{{b.val}}</span>
+                </div>
+                <div style="position: absolute; left: 0; right: 0; bottom: -32px; text-align: center;">
+                  <div style="font-size: 11px; color: {{b.nameFg}}; line-height: 1.25;">{{b.name}}</div>
+                </div>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+
+        <div class="panel" style="width: 316px; flex-shrink: 0; padding: 13px 15px; display: flex; flex-direction: column;">
+          <div class="lbl" style="margin-bottom: 9px;">Accuracy guard</div>
+          <div style="background: {{guard.bg}}; border: 1px solid {{guard.bd}}; border-radius: 3px; padding: 10px 11px;">
+            <div style="display: flex; align-items: center; gap: 7px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="{{guard.fg}}" stroke-width="3"><path d="m4 12 6 6L20 6"/></svg>
+              <span style="font-size: 13px; color: {{guard.fg}};">{{guard.title}}</span>
+            </div>
+            <div style="display: flex; align-items: baseline; gap: 7px; margin-top: 7px;">
+              <span class="mono" style="font-size: 20px; color: {{guard.fg}};">{{guard.value}} %</span>
+              <span class="mono" style="font-size: 11px; color: #626b75;">floor 95.0 % · was 96.2 %</span>
+            </div>
+            <div style="font-size: 11px; color: #98a2ac; line-height: 1.45; margin-top: 7px;">
+              Replayed on LIBERO-Long and 240 recorded real-robot rollouts. 412 faster configurations were found and thrown away for landing under the floor.
+            </div>
+          </div>
+
+          <div class="lbl" style="margin-top: 14px; margin-bottom: 8px;">Artifact bundle</div>
+          <div style="display: flex; flex-direction: column; gap: 0;">
+            <sc-for list="{{bundle}}" as="a" hint-placeholder-count="5">
+              <div style="display: flex; align-items: center; gap: 8px; padding: 5px 0; border-bottom: 1px solid #171b20;">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#626b75" stroke-width="2"><path d="M21 16V8l-9-5-9 5v8l9 5 9-5z"/></svg>
+                <span class="mono" style="font-size: 11px; color: #98a2ac; flex-grow: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{a.n}}</span>
+                <span class="mono" style="font-size: 10px; color: #626b75;">{{a.s}}</span>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="flex-grow: 1;"></div>
+
+          <div onClick="{{noop}}" style="background: var(--accent); color: #0b0d10; border-radius: 3px; padding: 10px; text-align: center; font-size: 13px; font-weight: 600; cursor: pointer;">
+            Deploy to orin-nx-lab
+          </div>
+          <div onClick="{{noop}}" style="border: 1px solid #394149; color: #e6e9ec; border-radius: 3px; padding: 9px; text-align: center; font-size: 13px; cursor: pointer; margin-top: 6px;">
+            Download bundle · 2.1 GB
+          </div>
+        </div>
+      </div>
+
+      <!-- passes -->
+      <div style="flex-grow: 1; min-height: 0; display: flex; gap: 10px;">
+        <sc-for list="{{passes}}" as="p" hint-placeholder-count="4">
+          <div class="pass" onClick="{{p.toggle}}" style="flex-grow: 1; flex-basis: 0; min-width: 0; background: {{p.bg}}; border: 1px solid {{p.bd}}; border-radius: 3px; padding: 12px 13px; display: flex; flex-direction: column; cursor: pointer;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="width: 26px; height: 15px; border-radius: 8px; background: {{p.trackBg}}; border: 1px solid {{p.trackBd}}; position: relative; flex-shrink: 0;">
+                <span style="position: absolute; top: 2px; left: {{p.knob}}; width: 9px; height: 9px; border-radius: 50%; background: {{p.knobBg}};"></span>
+              </span>
+              <span style="font-size: 13px; font-weight: 500; color: {{p.titleFg}};">{{p.title}}</span>
+              <div style="flex-grow: 1;"></div>
+              <span class="mono" style="font-size: 14px; color: {{p.gainFg}};">{{p.gain}}</span>
+            </div>
+
+            <div style="font-size: 11px; color: #98a2ac; line-height: 1.45; margin-top: 9px;">{{p.found}}</div>
+
+            <div style="height: 1px; background: #1d2228; margin: 10px 0;"></div>
+
+            <sc-for list="{{p.rows}}" as="r" hint-placeholder-count="3">
+              <div style="display: flex; align-items: baseline; gap: 8px; padding: 2px 0;">
+                <span class="lbl" style="font-size: 9px; width: 74px; flex-shrink: 0;">{{r.k}}</span>
+                <span class="mono" style="font-size: 10px; color: #e6e9ec; flex-grow: 1; min-width: 0;">{{r.v}}</span>
+              </div>
+            </sc-for>
+
+            <div style="flex-grow: 1;"></div>
+
+            <div style="display: flex; align-items: flex-start; gap: 7px; background: #0b0d10; border: 1px solid #1d2228; border-radius: 2px; padding: 7px 8px; margin-top: 10px;">
+              <span class="mono" style="font-size: 9px; color: {{p.noteFg}}; flex-shrink: 0;">{{p.noteTag}}</span>
+              <span style="font-size: 10px; color: #98a2ac; line-height: 1.4;">{{p.note}}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+    </div>
+  </div>
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#ccff4d","options":["#ccff4d","#5fd3e8","#f2b544","#b39cf5"]},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { on: { quant: true, spec: true, scale: true, kernel: true } };
+  }
+
+  renderVals() {
+    const accent = this.props.accent ?? '#ccff4d';
+    const S = this.state.on;
+    const BASE = 44.2, SCALE = 46;
+
+    const defs = [
+      { id: 'quant', name: 'Auto-quantization', short: 'Quantization', ms: 7.9, succ: 0.4, w: 3.1,
+        found: 'Swept 34 modules over 512 precision assignments, each replayed against the success guard.',
+        rows: [['Vision tower', 'INT8 per-channel · 512-sample calib'], ['Backbone', 'W4A16 · AWQ, group 128'], ['Action expert', 'FP16 held — see note'], ['Configs tried', '512 · 337 rejected on guard']],
+        noteTag: 'WHY', note: 'INT8 everywhere is 3.2 ms faster and lands at 88.1 % success. The action expert is where precision breaks first, so it stays FP16.' },
+      { id: 'spec', name: 'Auto speculative decoding', short: 'Spec. decode', ms: 2.9, succ: 0, w: 0.4,
+        found: 'Distilled a draft head off the backbone, then swept draft length for accepted tokens per cycle.',
+        rows: [['Draft head', '2 layers · 384 hidden · 41 MB'], ['Draft length γ', '4 (swept 1–8)'], ['Acceptance rate', '0.81'], ['Verify cost', '1.1 ms · amortized']],
+        noteTag: 'EXACT', note: 'Output-identical to the unmodified backbone by construction, so task success is untouched — the only pass here that costs no accuracy.' },
+      { id: 'scale', name: 'Auto scaling', short: 'Scaling', ms: 6.2, succ: 0, w: 6.2,
+        found: 'Searched placement across GPU, both DLA cores and CPU, then pinned clocks and captured the cycle.',
+        rows: [['View A / View B', 'DLA0 / DLA1 — now parallel'], ['Backbone + expert', 'GPU · stream 0'], ['Graph capture', '41 launches → 3'], ['Clocks', 'pinned · 25 W held']],
+        noteTag: 'JITTER', note: 'Capturing the whole cycle in one CUDA graph is what collapses p99 − p50 from 9.7 ms to 2.4 ms. Deadline misses go to zero.' },
+      { id: 'kernel', name: 'Fused kernel bench', short: 'Fused kernels', ms: 4.4, succ: 0.1, w: 0.9,
+        found: 'Generated fusion candidates per hot op, compiled them for this exact SM, and raced them on the board.',
+        rows: [['Candidates', '218 generated · 147 compiled'], ['Accepted', '11 after numerics gate'], ['Best single win', 'fused_attn_qkv 5.9 → 3.4 ms'], ['Numerics gate', 'max abs err < 2e-3 vs FP32']],
+        noteTag: 'OPEN', note: 'Rejected candidates are kept with their failure reason. Full leaderboard and generated source on the kernel bench screen.' }
+    ];
+
+    const active = defs.filter((d) => S[d.id]);
+    const totalMs = active.reduce((a, d) => a + d.ms, 0);
+    const after = BASE - totalMs;
+    const succAfter = 96.2 - active.reduce((a, d) => a + d.succ, 0);
+    const wAfter = 21.3 - active.reduce((a, d) => a + d.w, 0);
+    const hzAfter = 1000 / after;
+    const speedup = (BASE / after).toFixed(2);
+    const guardOk = succAfter >= 95.0;
+    const hitsTarget = hzAfter >= 30;
+
+    const pctOf = (v) => (v / SCALE * 100).toFixed(2) + '%';
+
+    const wf = [];
+    wf.push({ name: 'Your baseline', val: BASE.toFixed(1), bottom: '0%', height: pctOf(BASE), labelBottom: 'calc(' + pctOf(BASE) + ' + 4px)', fill: '#2a3038', stroke: '#394149', valFg: '#98a2ac', nameFg: '#98a2ac' });
+    let run = BASE;
+    defs.forEach((d) => {
+      const on = S[d.id];
+      const lo = on ? run - d.ms : run;
+      wf.push({
+        name: d.short,
+        val: on ? '−' + d.ms.toFixed(1) : 'off',
+        bottom: pctOf(lo),
+        height: on ? pctOf(d.ms) : '1px',
+        labelBottom: 'calc(' + pctOf(run) + ' + 4px)',
+        fill: on ? accent : 'transparent',
+        stroke: on ? accent : '#2a3038',
+        valFg: on ? accent : '#4a525b',
+        nameFg: on ? '#e6e9ec' : '#4a525b'
+      });
+      run = lo;
+    });
+    wf.push({ name: 'Optimized', val: after.toFixed(1), bottom: '0%', height: pctOf(after), labelBottom: 'calc(' + pctOf(after) + ' + 4px)', fill: '#1d3324', stroke: '#5ddb8a', valFg: '#5ddb8a', nameFg: '#e6e9ec' });
+
+    const hero = [
+      { k: 'Control rate', before: '22.6', after: hzAfter.toFixed(1), u: 'Hz', fg: hitsTarget ? '#5ddb8a' : '#e8b84b',
+        sub: hitsTarget ? '30 Hz target met, ' + (hzAfter - 30).toFixed(1) + ' Hz of headroom' : 'still ' + (30 - hzAfter).toFixed(1) + ' Hz under the 30 Hz target', subFg: hitsTarget ? '#5ddb8a' : '#e8b84b' },
+      { k: 'Jitter, p99 − p50', before: '9.7', after: S.scale ? '2.4' : '9.1', u: 'ms', fg: '#e6e9ec',
+        sub: S.scale ? 'zero deadline misses in 12,480 cycles' : 'graph capture is off', subFg: '#626b75' },
+      { k: 'Board power', before: '21.3', after: wAfter.toFixed(1), u: 'W avg', fg: '#5ddb8a', sub: 'more thermal room at 40 °C ambient', subFg: '#626b75' },
+      { k: 'Task success', before: '96.2', after: succAfter.toFixed(1), u: '%', fg: guardOk ? '#5ddb8a' : '#f2685c',
+        sub: guardOk ? 'above the 95.0 % floor' : 'BELOW the 95.0 % floor', subFg: guardOk ? '#626b75' : '#f2685c' }
+    ];
+
+    const passes = defs.map((d) => {
+      const on = S[d.id];
+      return {
+        title: d.name, found: d.found, note: d.note, noteTag: d.noteTag,
+        rows: d.rows.map((r) => ({ k: r[0], v: r[1] })),
+        gain: on ? '−' + d.ms.toFixed(1) + ' ms' : 'skipped',
+        gainFg: on ? accent : '#4a525b',
+        titleFg: on ? '#e6e9ec' : '#626b75',
+        noteFg: on ? '#e8b84b' : '#4a525b',
+        bg: on ? '#121519' : '#0e1114',
+        bd: on ? '#262c34' : '#1d2228',
+        trackBg: on ? accent : '#1d2228',
+        trackBd: on ? accent : '#394149',
+        knob: on ? '13px' : '2px',
+        knobBg: on ? '#0b0d10' : '#626b75',
+        toggle: () => {
+          const next = Object.assign({}, this.state.on);
+          next[d.id] = !next[d.id];
+          this.setState({ on: next });
+        }
+      };
+    });
+
+    return {
+      accent, wf, hero, passes, speedup,
+      msAfter: after.toFixed(1),
+      deadlineBottom: 'calc(34px + (100% - 34px) * ' + (33.3 / SCALE).toFixed(4) + ')',
+      guard: {
+        title: guardOk ? 'Guard held' : 'Guard breached',
+        value: succAfter.toFixed(1),
+        fg: guardOk ? '#5ddb8a' : '#f2685c',
+        bg: guardOk ? '#101711' : '#161113',
+        bd: guardOk ? '#2f4a33' : '#5c2f2b'
+      },
+      bundle: [
+        { n: 'pi0_droid_orinnx.plan', s: '1.4 GB' },
+        { n: 'calibration_int8.cache', s: '38 MB' },
+        { n: 'draft_head_g4.safetensors', s: '41 MB' },
+        { n: 'fused_kernels_sm87.cubin', s: '12 MB' },
+        { n: 'cadence_report_2847.pdf', s: '2.1 MB' }
+      ],
+      noop: () => {}
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,421 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+  <style>
+    body { margin: 0; background: #0b0d10; }
+    * { box-sizing: border-box; }
+    a { color: #ccff4d; text-decoration: none; }
+    a:hover { color: #e2ff96; }
+    .lbl { font: 500 10px/1 'Barlow Semi Condensed', 'Helvetica Neue', sans-serif; letter-spacing: 0.1em; text-transform: uppercase; color: #626b75; }
+    .mono { font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace; font-variant-numeric: tabular-nums; }
+    .panel { background: #121519; border: 1px solid #262c34; border-radius: 3px; }
+    .rail-btn:hover { background: #1d2228; }
+    .op:hover { background: #171b20; }
+    .cand:hover { background: #171b20; }
+  </style>
+</helmet>
+
+<div style="--accent: {{accent}}; width: 1440px; height: 900px; background: #0b0d10; color: #e6e9ec; font-family: 'Barlow Semi Condensed', 'Helvetica Neue', sans-serif; display: flex; flex-direction: column; overflow: hidden;">
+
+  <div style="height: 52px; flex-shrink: 0; border-bottom: 1px solid #262c34; background: #0e1114; display: flex; align-items: center; gap: 20px; padding: 0 18px;">
+    <div style="display: flex; align-items: center; gap: 9px;">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M2 12h4l3-8 5 16 3-8h5"/></svg>
+      <span style="font-size: 15px; font-weight: 600; letter-spacing: 0.13em;">CADENCE</span>
+    </div>
+    <div style="width: 1px; height: 20px; background: #262c34;"></div>
+    <div style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #98a2ac;">
+      <span>Runs</span><span style="color: #3d444c;">/</span>
+      <span class="mono" style="font-size: 12px;">pi0-fast-droid</span><span style="color: #3d444c;">/</span>
+      <span class="mono" style="font-size: 12px;">#2847</span><span style="color: #3d444c;">/</span>
+      <span style="color: #e6e9ec;">Kernel bench</span>
+    </div>
+    <div style="flex-grow: 1;"></div>
+    <div class="mono" style="font-size: 11px; color: #626b75;">target sm_87 · CUDA 12.6 · every candidate timed on orin-nx-lab</div>
+  </div>
+
+  <div style="flex-grow: 1; display: flex; min-height: 0;">
+
+    <div style="width: 56px; flex-shrink: 0; border-right: 1px solid #262c34; background: #0e1114; display: flex; flex-direction: column; align-items: center; gap: 4px; padding-top: 12px;">
+      <div class="rail-btn" style="width: 38px; height: 38px; border-radius: 3px; display: flex; align-items: center; justify-content: center; border-left: 2px solid transparent; cursor: pointer;">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#626b75" stroke-width="1.8"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg>
+      </div>
+      <div class="rail-btn" style="width: 38px; height: 38px; border-radius: 3px; display: flex; align-items: center; justify-content: center; border-left: 2px solid transparent; cursor: pointer;">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#626b75" stroke-width="1.8"><rect x="6" y="6" width="12" height="12" rx="1"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg>
+      </div>
+      <div class="rail-btn" style="width: 38px; height: 38px; border-radius: 3px; display: flex; align-items: center; justify-content: center; border-left: 2px solid transparent; cursor: pointer;">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#626b75" stroke-width="1.8"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>
+      </div>
+      <div class="rail-btn" style="width: 38px; height: 38px; border-radius: 3px; display: flex; align-items: center; justify-content: center; background: #1d2228; border-left: 2px solid var(--accent); cursor: pointer;">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="1.8"><path d="M8 5 3 12l5 7M16 5l5 7-5 7"/></svg>
+      </div>
+    </div>
+
+    <!-- op list -->
+    <div style="width: 274px; flex-shrink: 0; border-right: 1px solid #262c34; background: #0e1114; display: flex; flex-direction: column;">
+      <div style="padding: 14px 14px 10px 14px;">
+        <div class="lbl" style="color: #e6e9ec;">Hot ops</div>
+        <div style="font-size: 11px; color: #98a2ac; margin-top: 4px; line-height: 1.4;">Ranked by time recoverable, not by time spent.</div>
+      </div>
+      <div style="flex-grow: 1; overflow: hidden;">
+        <sc-for list="{{ops}}" as="o" hint-placeholder-count="7">
+          <div class="op" onClick="{{o.pick}}" style="padding: 9px 14px; cursor: pointer; background: {{o.bg}}; border-left: 2px solid {{o.mark}}; border-bottom: 1px solid #171b20;">
+            <div style="display: flex; align-items: baseline; gap: 8px;">
+              <span class="mono" style="font-size: 11px; color: {{o.fg}}; flex-grow: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{o.name}}</span>
+              <span class="mono" style="font-size: 12px; color: {{o.spdFg}};">{{o.speedup}}</span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 7px; margin-top: 6px;">
+              <span class="mono" style="font-size: 10px; color: #626b75; width: 62px;">{{o.base}} → {{o.best}}</span>
+              <div style="flex-grow: 1; height: 3px; background: #1d2228; border-radius: 2px; overflow: hidden; position: relative;">
+                <div style="position: absolute; left: 0; top: 0; height: 100%; width: {{o.barBase}}; background: #394149;"></div>
+                <div style="position: absolute; left: 0; top: 0; height: 100%; width: {{o.barBest}}; background: {{o.barFg}};"></div>
+              </div>
+              <span class="mono" style="font-size: 9px; color: #626b75;">{{o.accepted}}</span>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+      <div style="padding: 11px 14px; border-top: 1px solid #262c34;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+          <span class="lbl">Session total</span>
+          <span class="mono" style="font-size: 11px; color: var(--accent);">−4.4 ms / cycle</span>
+        </div>
+        <div class="mono" style="font-size: 10px; color: #626b75; line-height: 1.5;">218 generated · 147 compiled<br>11 accepted · 136 rejected</div>
+      </div>
+    </div>
+
+    <!-- leaderboard + convergence -->
+    <div style="flex-grow: 1; min-width: 0; padding: 14px 16px; display: flex; flex-direction: column; gap: 11px;">
+
+      <div style="flex-shrink: 0;">
+        <div style="display: flex; align-items: baseline; gap: 10px;">
+          <span class="mono" style="font-size: 17px; color: #e6e9ec;">{{op.name}}</span>
+          <span style="font-size: 12px; color: #98a2ac;">{{op.where}}</span>
+          <div style="flex-grow: 1;"></div>
+          <span class="mono" style="font-size: 11px; color: #626b75;">{{op.shape}}</span>
+        </div>
+      </div>
+
+      <!-- leaderboard -->
+      <div class="panel" style="flex-grow: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden;">
+        <div style="display: flex; align-items: center; gap: 0; padding: 8px 12px; border-bottom: 1px solid #262c34; background: #0e1114;">
+          <span class="lbl" style="width: 78px;">Candidate</span>
+          <span class="lbl" style="flex-grow: 1;">Fusion scope</span>
+          <span class="lbl" style="width: 104px;">Tile · stages</span>
+          <span class="lbl" style="width: 62px; text-align: right;">Time</span>
+          <span class="lbl" style="width: 54px; text-align: right;">vs base</span>
+          <span class="lbl" style="width: 66px; text-align: right;">Max err</span>
+          <span class="lbl" style="width: 96px; text-align: right;">Verdict</span>
+        </div>
+        <div style="flex-grow: 1; overflow: hidden;">
+          <sc-for list="{{cands}}" as="c" hint-placeholder-count="8">
+            <div class="cand" onClick="{{c.pick}}" style="display: flex; align-items: center; padding: 8px 12px; cursor: pointer; background: {{c.bg}}; border-bottom: 1px solid #171b20; border-left: 2px solid {{c.mark}};">
+              <span class="mono" style="width: 76px; font-size: 11px; color: {{c.idFg}};">{{c.id}}</span>
+              <span style="flex-grow: 1; min-width: 0; font-size: 12px; color: {{c.fg}}; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{c.fusion}}</span>
+              <span class="mono" style="width: 104px; font-size: 10px; color: #626b75;">{{c.tile}}</span>
+              <span class="mono" style="width: 62px; text-align: right; font-size: 12px; color: {{c.fg}};">{{c.ms}}</span>
+              <span class="mono" style="width: 54px; text-align: right; font-size: 11px; color: {{c.spdFg}};">{{c.spd}}</span>
+              <span class="mono" style="width: 66px; text-align: right; font-size: 10px; color: {{c.errFg}};">{{c.err}}</span>
+              <span style="width: 96px; text-align: right;">
+                <span class="mono" style="font-size: 9px; padding: 2px 6px; border-radius: 2px; color: {{c.vFg}}; border: 1px solid {{c.vBd}};">{{c.verdict}}</span>
+              </span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <!-- convergence -->
+      <div class="panel" style="height: 168px; flex-shrink: 0; padding: 11px 14px; display: flex; flex-direction: column;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span class="lbl" style="color: #e6e9ec;">Search convergence</span>
+          <div style="flex-grow: 1;"></div>
+          <div style="display: flex; align-items: center; gap: 5px;">
+            <span style="width: 6px; height: 6px; border-radius: 50%; background: #394149;"></span>
+            <span class="mono" style="font-size: 9px; color: #626b75;">candidate</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 5px;">
+            <span style="width: 9px; height: 2px; background: var(--accent);"></span>
+            <span class="mono" style="font-size: 9px; color: #626b75;">best so far</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 5px;">
+            <span style="width: 9px; height: 2px; background: #f2685c;"></span>
+            <span class="mono" style="font-size: 9px; color: #626b75;">cuBLAS baseline</span>
+          </div>
+        </div>
+        <div style="flex-grow: 1; position: relative; margin-top: 9px; border-left: 1px solid #262c34; border-bottom: 1px solid #262c34;">
+          <div style="position: absolute; left: 0; right: 0; bottom: {{baseLine}}; border-top: 1px dashed #f2685c;"></div>
+          <sc-for list="{{dots}}" as="d" hint-placeholder-count="40">
+            <span style="position: absolute; left: {{d.x}}; bottom: {{d.y}}; width: 3px; height: 3px; border-radius: 50%; background: {{d.fg}};"></span>
+          </sc-for>
+          <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" style="position: absolute; inset: 0; overflow: visible;">
+            <polyline points="{{bestLine}}" fill="none" stroke="var(--accent)" stroke-width="0.7" vector-effect="non-scaling-stroke"/>
+          </svg>
+        </div>
+        <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+          <span class="mono" style="font-size: 9px; color: #626b75;">trial 1</span>
+          <span class="mono" style="font-size: 9px; color: #626b75;">trial 218 · search stopped, no improvement in 40</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- generated source -->
+    <div style="width: 372px; flex-shrink: 0; border-left: 1px solid #262c34; background: #0e1114; padding: 14px 15px; display: flex; flex-direction: column;">
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <span class="lbl" style="color: #e6e9ec;">{{cand.id}}</span>
+        <span class="mono" style="font-size: 9px; padding: 2px 6px; border-radius: 2px; color: {{cand.vFg}}; border: 1px solid {{cand.vBd}};">{{cand.verdict}}</span>
+      </div>
+
+      <div style="display: flex; gap: 6px; margin-top: 11px;">
+        <sc-for list="{{cand.stats}}" as="st" hint-placeholder-count="3">
+          <div style="flex-grow: 1; background: #121519; border: 1px solid #262c34; border-radius: 2px; padding: 7px 8px;">
+            <div class="lbl" style="font-size: 9px;">{{st.k}}</div>
+            <div class="mono" style="font-size: 13px; margin-top: 3px; color: {{st.fg}};">{{st.v}}</div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div class="lbl" style="margin-top: 14px; margin-bottom: 7px;">Generated kernel</div>
+      <div style="background: #08090b; border: 1px solid #1d2228; border-radius: 3px; padding: 10px 11px; flex-grow: 1; overflow: hidden;">
+        <sc-for list="{{cand.src}}" as="l" hint-placeholder-count="14">
+          <div style="display: flex; gap: 9px;">
+            <span class="mono" style="font-size: 9px; color: #343b43; width: 14px; text-align: right; flex-shrink: 0;">{{l.n}}</span>
+            <span class="mono" style="font-size: 10px; color: {{l.fg}}; white-space: pre; line-height: 1.55;">{{l.t}}</span>
+          </div>
+        </sc-for>
+      </div>
+
+      <div class="lbl" style="margin-top: 13px; margin-bottom: 6px;">Numerics gate</div>
+      <div style="background: #121519; border: 1px solid #262c34; border-left: 2px solid {{cand.vFg}}; border-radius: 2px; padding: 9px 11px;">
+        <div style="font-size: 11px; color: #98a2ac; line-height: 1.45;">{{cand.numerics}}</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#ccff4d","options":["#ccff4d","#5fd3e8","#f2b544","#b39cf5"]},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { op: 'attn', cand: 'cand_0147' };
+  }
+
+  renderVals() {
+    const accent = this.props.accent ?? '#ccff4d';
+    const S = this.state;
+
+    const OPS = [
+      { id: 'attn', name: 'fused_attn_qkv_so400m', where: 'vision tower · 27 layers', shape: 'B 2 · S 256 · H 16 · D 72', base: 5.9, best: 3.4, acc: '4 ok' },
+      { id: 'mlp', name: 'mlp_gelu_so400m', where: 'vision tower · 27 layers', shape: 'B 2 · S 256 · 1152 → 4304', base: 4.4, best: 3.1, acc: '2 ok' },
+      { id: 'gemmq', name: 'gemm_qkv_bf16', where: 'backbone · 18 layers', shape: 'B 1 · S 812 · 2048 → 6144', base: 4.8, best: 3.9, acc: '1 ok' },
+      { id: 'patch', name: 'patch_embed_conv2d', where: 'vision tower · stem', shape: 'B 2 · 3×224² · patch 14', base: 3.1, best: 1.9, acc: '2 ok' },
+      { id: 'flow', name: 'flow_step_mlp_fp16', where: 'action expert · 10 steps', shape: 'B 1 · 50 × 1024', base: 5.4, best: 4.6, acc: '1 ok' },
+      { id: 'ln', name: 'layernorm_fp16', where: 'vision tower · 54 sites', shape: 'B 2 · S 256 · 1152', base: 1.8, best: 0.7, acc: '1 ok' },
+      { id: 'rope', name: 'rope_apply', where: 'backbone · 18 layers', shape: 'B 1 · S 812 · H 8 · D 256', base: 0.6, best: 0.3, acc: '0 ok' }
+    ];
+
+    // [id, fusion, tile, ms, err, verdict]
+    const CANDS = {
+      attn: [
+        ['cand_0147', 'qkv + bias + rope, warp-specialized', '128×128×64 · 4 st', '3.41', '6.1e-4', 'ok'],
+        ['cand_0166', 'qkv + bias + rope, deep pipeline', '128×128×128 · 6 st', '3.49', '6.4e-4', 'ok'],
+        ['cand_0092', 'qkv + bias', '128×64×64 · 3 st', '3.58', '5.8e-4', 'ok'],
+        ['cand_0038', 'qkv only, split-k', '64×64×32 · 2 st', '4.20', '3.1e-4', 'ok'],
+        ['cand_0211', 'qkv + bias + rope + softmax', '256×128×32 · 5 st', '3.12', '4.3e-2', 'numerics'],
+        ['cand_0180', 'qkv + bias + rope', '256×256×64 · 4 st', '—', '—', 'smem'],
+        ['cand_0203', 'persistent-CTA qkv + rope', '128×128×64 · 4 st', '—', '—', 'compile'],
+        ['baseline', 'cuBLAS gemm, separate bias and rope', 'library default', '5.90', '—', 'base']
+      ],
+      mlp: [
+        ['cand_0071', 'up + gelu + down, epilogue fused', '128×128×64 · 4 st', '3.14', '7.2e-4', 'ok'],
+        ['cand_0119', 'up + gelu fused, down separate', '128×64×64 · 3 st', '3.40', '4.9e-4', 'ok'],
+        ['cand_0155', 'up + gelu + down, tanh approx', '128×128×64 · 4 st', '2.88', '1.9e-2', 'numerics'],
+        ['cand_0044', 'up only', '64×128×32 · 2 st', '4.11', '2.8e-4', 'ok'],
+        ['baseline', 'cuBLAS gemm, separate gelu', 'library default', '4.40', '—', 'base']
+      ],
+      gemmq: [
+        ['cand_0088', 'W4A16 dequant fused into mainloop', '64×128×128 · 5 st', '3.91', '8.8e-4', 'ok'],
+        ['cand_0130', 'W4A16 dequant, staged to smem', '64×64×128 · 4 st', '4.06', '8.6e-4', 'ok'],
+        ['cand_0177', 'W4A16, group 64', '64×128×64 · 5 st', '3.77', '3.1e-2', 'numerics'],
+        ['baseline', 'dequant to fp16, then cuBLAS', 'library default', '4.80', '—', 'base']
+      ],
+      patch: [
+        ['cand_0021', 'conv + layernorm + pos-embed add', '64×64 · im2col-free', '1.93', '4.4e-4', 'ok'],
+        ['cand_0057', 'conv + layernorm', '64×64 · im2col', '2.31', '4.1e-4', 'ok'],
+        ['baseline', 'cuDNN conv, separate norm and add', 'library default', '3.10', '—', 'base']
+      ],
+      flow: [
+        ['cand_0164', 'time-embed + mlp fused, chunk-parallel', '50×128 · 3 st', '4.62', '5.0e-4', 'ok'],
+        ['cand_0191', 'time-embed + mlp, fp8 accum', '50×128 · 3 st', '3.98', '6.7e-2', 'numerics'],
+        ['baseline', 'separate time-embed and mlp', 'library default', '5.40', '—', 'base']
+      ],
+      ln: [
+        ['cand_0009', 'welford one-pass, vectorized 8×', '256 thr · 1 st', '0.71', '1.2e-4', 'ok'],
+        ['cand_0033', 'two-pass, vectorized 4×', '256 thr · 1 st', '1.04', '1.1e-4', 'ok'],
+        ['baseline', 'two-pass, scalar', 'library default', '1.80', '—', 'base']
+      ],
+      rope: [
+        ['cand_0118', 'rope folded into qkv epilogue', 'n/a · epilogue', '0.31', '2.2e-4', 'ok'],
+        ['baseline', 'standalone rope kernel', 'library default', '0.60', '—', 'base']
+      ]
+    };
+
+    const ops = OPS.map((o) => {
+      const on = S.op === o.id;
+      return {
+        name: o.name, base: o.base.toFixed(1), best: o.best.toFixed(1),
+        speedup: (o.base / o.best).toFixed(2) + '×',
+        accepted: o.acc,
+        bg: on ? '#171b20' : 'transparent',
+        mark: on ? accent : 'transparent',
+        fg: on ? '#e6e9ec' : '#98a2ac',
+        spdFg: on ? accent : '#626b75',
+        barBase: (o.base / 5.9 * 100).toFixed(0) + '%',
+        barBest: (o.best / 5.9 * 100).toFixed(0) + '%',
+        barFg: on ? accent : '#626b75',
+        pick: () => this.setState({ op: o.id, cand: (CANDS[o.id] || CANDS.attn)[0][0] })
+      };
+    });
+
+    const V = {
+      ok: ['accepted', '#5ddb8a', '#2f4a33'],
+      numerics: ['numerics', '#f2685c', '#5c2f2b'],
+      smem: ['smem 74 KB', '#e8b84b', '#5c4a22'],
+      compile: ['ptxas fail', '#e8b84b', '#5c4a22'],
+      base: ['reference', '#98a2ac', '#394149']
+    };
+
+    const op = OPS.find((o) => o.id === S.op) || OPS[0];
+    const list = CANDS[S.op] || CANDS.attn;
+    const baseMs = op.base;
+
+    const cands = list.map((c) => {
+      const on = S.cand === c[0];
+      const v = V[c[5]];
+      const isBase = c[5] === 'base';
+      const failed = c[5] === 'smem' || c[5] === 'compile';
+      const spd = (c[3] === '—' || isBase) ? (isBase ? '1.00×' : '—') : (baseMs / parseFloat(c[3])).toFixed(2) + '×';
+      return {
+        id: c[0], fusion: c[1], tile: c[2],
+        ms: c[3] === '—' ? '—' : c[3] + ' ms',
+        spd: spd, err: c[4],
+        verdict: v[0], vFg: v[1], vBd: v[2],
+        bg: on ? '#171b20' : 'transparent',
+        mark: on ? accent : 'transparent',
+        fg: failed ? '#626b75' : (on ? '#e6e9ec' : '#98a2ac'),
+        idFg: on ? accent : '#98a2ac',
+        spdFg: c[5] === 'ok' ? '#5ddb8a' : '#626b75',
+        errFg: c[5] === 'numerics' ? '#f2685c' : '#626b75',
+        pick: () => this.setState({ cand: c[0] })
+      };
+    });
+
+    const curRaw = list.find((c) => c[0] === S.cand) || list[0];
+    const curV = V[curRaw[5]];
+
+    const SRC = {
+      ok: [
+        '@triton.jit',
+        'def qkv_rope_fused(',
+        '    X, Wqkv, Bqkv, CosSin, Out,',
+        '    S: tl.constexpr, D: tl.constexpr,',
+        '    BM: tl.constexpr = 128,',
+        '    BN: tl.constexpr = 128,',
+        '    BK: tl.constexpr = 64,',
+        '    STAGES: tl.constexpr = 4):',
+        '',
+        '  pid = tl.program_id(0)',
+        '  acc = tl.zeros((BM, BN), tl.float32)',
+        '',
+        '  for k in tl.range(0, D, BK,',
+        '                    num_stages=STAGES):',
+        '    a = tl.load(X + ...)',
+        '    b = tl.load(Wqkv + ...)',
+        '    acc = tl.dot(a, b, acc)',
+        '',
+        '  # epilogue: bias + rope, no round trip',
+        '  acc += tl.load(Bqkv + ...)',
+        '  cs = tl.load(CosSin + ...)',
+        '  acc = rope_inplace(acc, cs)',
+        '  tl.store(Out + ..., acc.to(tl.float16))'
+      ],
+      fail: [
+        '# candidate rejected before timing',
+        '',
+        'ptxas error   : Entry function',
+        '  \'qkv_rope_persistent\' uses too much',
+        '  shared data (74240 bytes, 0xc000 max)',
+        '',
+        'requested smem:',
+        '  A stage  128 × 64 × 2 B × 4 = 65 536',
+        '  B stage  128 × 64 × 2 B × 4 = 65 536',
+        '  total                        74 240',
+        '  sm_87 limit                  49 152',
+        '',
+        '# the generator shrinks the tile and',
+        '# re-emits: see cand_0147'
+      ]
+    };
+    const failed = curRaw[5] === 'smem' || curRaw[5] === 'compile';
+    const srcLines = (failed ? SRC.fail : SRC.ok).map((t, i) => ({
+      n: i + 1, t: t,
+      fg: t.trim().startsWith('#') ? '#4f5a52' : (t.indexOf('error') >= 0 ? '#f2685c' : '#9aa8b4')
+    }));
+
+    const numerics = {
+      ok: 'Compared against an FP32 reference over 4,096 sampled activations from the calibration set. Max absolute error ' + curRaw[4] + ', mean relative error 8.1e-5. Within the 2e-3 gate.',
+      numerics: 'Max absolute error ' + curRaw[4] + ' exceeds the 2e-3 gate. It was the fastest candidate found; it is discarded regardless. Downstream action deltas drifted past 1 cm in 6 of 240 replayed rollouts.',
+      smem: 'Never timed — the tile needs 74 KB of shared memory against the 48 KB available on sm_87. The generator shrank the tile and re-emitted it as cand_0147.',
+      compile: 'Never timed — ptxas rejected the persistent-CTA form for this architecture. Logged with its emitted PTX for inspection.',
+      base: 'The unmodified library path, timed under identical conditions. Every speedup on this screen is measured against this row.'
+    };
+
+    const statOf = {
+      ok: [['Time', curRaw[3] + ' ms', '#e6e9ec'], ['vs base', (baseMs / parseFloat(curRaw[3] || 1)).toFixed(2) + '×', '#5ddb8a'], ['Occupancy', '78 %', '#e6e9ec']],
+      numerics: [['Time', curRaw[3] + ' ms', '#626b75'], ['vs base', (baseMs / parseFloat(curRaw[3] || 1)).toFixed(2) + '×', '#626b75'], ['Max err', curRaw[4], '#f2685c']],
+      smem: [['Time', '—', '#626b75'], ['Smem', '74 KB', '#e8b84b'], ['Limit', '48 KB', '#626b75']],
+      compile: [['Time', '—', '#626b75'], ['Stage', 'ptxas', '#e8b84b'], ['Exit', '255', '#626b75']],
+      base: [['Time', curRaw[3] + ' ms', '#e6e9ec'], ['vs base', '1.00×', '#98a2ac'], ['Occupancy', '52 %', '#e6e9ec']]
+    };
+
+    // convergence scatter — deterministic pseudo-random
+    let seed = 7;
+    const rnd = () => { seed = (seed * 1103515245 + 12345) % 2147483648; return seed / 2147483648; };
+    const N = 96, bestMs = parseFloat(op.best), floorMs = bestMs * 0.94, topMs = baseMs * 1.45;
+    const dots = []; const poly = [];
+    let bestSoFar = topMs;
+    for (let i = 0; i < N; i++) {
+      const t = i / (N - 1);
+      const centre = topMs - (topMs - bestMs) * Math.pow(t, 0.45);
+      const ms = Math.max(floorMs, centre + (rnd() - 0.42) * (topMs - bestMs) * 0.55);
+      if (ms < bestSoFar) bestSoFar = ms;
+      const x = t * 100, y = (ms - floorMs) / (topMs - floorMs) * 100;
+      const yb = (1 - (bestSoFar - floorMs) / (topMs - floorMs)) * 100;
+      dots.push({ x: x.toFixed(2) + '%', y: y.toFixed(2) + '%', fg: ms <= bestSoFar + 0.001 ? accent : '#394149' });
+      poly.push(x.toFixed(2) + ',' + yb.toFixed(2));
+    }
+
+    return {
+      accent, ops, cands, dots,
+      op: { name: op.name, where: op.where, shape: op.shape },
+      bestLine: poly.join(' '),
+      baseLine: ((baseMs - floorMs) / (topMs - floorMs) * 100).toFixed(2) + '%',
+      cand: {
+        id: curRaw[0], verdict: curV[0], vFg: curV[1], vBd: curV[2],
+        src: srcLines,
+        numerics: numerics[curRaw[5]],
+        stats: (statOf[curRaw[5]] || statOf.ok).map((x) => ({ k: x[0], v: x[1], fg: x[2] }))
+      }
+    };
+  }
+}
+</script>
+</body>
+</html>
