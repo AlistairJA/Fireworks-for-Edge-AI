@@ -1,17 +1,22 @@
 {
   "pages": [
-    { "id": "page-1", "name": "Demo flow" },
-    { "id": "page-2", "name": "Under the hood" }
+    { "id": "page-1", "name": "Console" },
+    { "id": "page-2", "name": "Run flow" },
+    { "id": "page-3", "name": "Under the hood" }
   ],
   "artboards": [
-    { "file": "Main.dc.html",       "title": "1 · Your model, your board", "page": "page-1", "x": 0,    "y": 0, "w": 1440, "h": 900, "is_interactive": true },
-    { "file": "Optimizing.dc.html", "title": "2 · Working",                "page": "page-1", "x": 1560, "y": 0, "w": 1440, "h": 900, "is_interactive": true },
-    { "file": "Result.dc.html",     "title": "3 · The number",             "page": "page-1", "x": 3120, "y": 0, "w": 1440, "h": 900, "is_interactive": true },
-    { "file": "Kernels.dc.html",    "title": "If they ask how",            "page": "page-2", "x": 0,    "y": 0, "w": 1440, "h": 900, "is_interactive": true }
+    { "file": "Main.dc.html",       "title": "Runs — the front door",        "page": "page-1", "x": 0,    "y": 0, "w": 1440, "h": 900, "is_interactive": true },
+    { "file": "Config.dc.html",     "title": "Configuration — the product",  "page": "page-1", "x": 1560, "y": 0, "w": 1440, "h": 900, "is_interactive": true },
+    { "file": "Targets.dc.html",    "title": "Targets — the real bottleneck","page": "page-1", "x": 3120, "y": 0, "w": 1440, "h": 900, "is_interactive": true },
+    { "file": "Intake.dc.html",     "title": "1 · Your model, your board",   "page": "page-2", "x": 0,    "y": 0, "w": 1440, "h": 900, "is_interactive": true },
+    { "file": "Optimizing.dc.html", "title": "2 · Working",                  "page": "page-2", "x": 1560, "y": 0, "w": 1440, "h": 900, "is_interactive": true },
+    { "file": "Result.dc.html",     "title": "3 · The number",               "page": "page-2", "x": 3120, "y": 0, "w": 1440, "h": 900, "is_interactive": true },
+    { "file": "Kernels.dc.html",    "title": "If they ask how",              "page": "page-3", "x": 0,    "y": 0, "w": 1440, "h": 900, "is_interactive": true }
   ],
   "annotations": [
-    { "id": "pitch", "x": 0, "y": -140, "w": 640, "page": "page-1", "text": "Three beats: what you give us, us working, the number. Toggle the rows on screen 3 to show the optimizer is really composing four separate wins.\n\n\"CADENCE\" is a placeholder name. Figures are plausible for a 3.3B VLA on an Orin NX but are illustrative, not measured." },
-    { "id": "depth", "x": 0, "y": -140, "w": 640, "page": "page-2", "text": "Kept off the main flow on purpose. This is the answer to \"but how do you actually get the last few milliseconds\" — don't lead with it." }
+    { "id": "console", "x": 0, "y": -150, "w": 700, "page": "page-1", "text": "The product is a configuration, not hosted inference. Runs is the front door, Configuration is the thing customers actually receive, Targets is the constraint that makes this hard — every candidate has to be compiled and timed on physical silicon.\n\nThe rejected smolvla run on the Runs screen is deliberate: 2.41x thrown away for failing the accuracy floor. That row is the trust story." },
+    { "id": "flow", "x": 0, "y": -130, "w": 640, "page": "page-2", "text": "The pitch narrative, unchanged: what you give us, us working, the number. Toggle the rows on screen 3 live." },
+    { "id": "depth", "x": 0, "y": -130, "w": 640, "page": "page-3", "text": "Answer to \"how do you get the last few milliseconds\" — a follow-up question, not the pitch. Fused kernels are marked preview in the config file since you said eventually." }
   ],
   "launch": { "view": "canvas", "page": "page-1" }
 }

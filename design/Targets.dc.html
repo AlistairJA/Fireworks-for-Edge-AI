@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+  <style>
+    body { margin: 0; background: #0b0d10; }
+    * { box-sizing: border-box; }
+    a { color: #ccff4d; text-decoration: none; }
+    a:hover { color: #e2ff96; }
+    .lbl { font: 500 10px/1 'Barlow Semi Condensed', 'Helvetica Neue', sans-serif; letter-spacing: 0.12em; text-transform: uppercase; color: #626b75; }
+    .mono { font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace; font-variant-numeric: tabular-nums; }
+    .nav:hover { background: #14181d; }
+    .brd:hover { background: #13171b; }
+  </style>
+</helmet>
+
+<div style="--accent: {{accent}}; width: 1440px; height: 900px; background: #0b0d10; color: #e6e9ec; font-family: 'Barlow Semi Condensed', 'Helvetica Neue', sans-serif; display: flex; overflow: hidden;">
+
+  <div style="width: 208px; flex-shrink: 0; background: #0e1114; border-right: 1px solid #1d2228; display: flex; flex-direction: column; padding: 26px 0 18px 0;">
+    <div style="display: flex; align-items: center; gap: 10px; padding: 0 20px; margin-bottom: 30px;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M2 12h4l3-8 5 16 3-8h5"/></svg>
+      <span style="font-size: 15px; font-weight: 600; letter-spacing: 0.14em;">CADENCE</span>
+    </div>
+    <sc-for list="{{nav}}" as="n" hint-placeholder-count="4">
+      <div class="nav" style="display: flex; align-items: center; gap: 11px; padding: 9px 20px; cursor: pointer; background: {{n.bg}}; border-left: 2px solid {{n.mark}};">
+        <span style="width: 14px; height: 14px; flex-shrink: 0; border-radius: 3px; border: 1.5px solid {{n.dot}};"></span>
+        <span style="font-size: 14px; color: {{n.fg}};">{{n.label}}</span>
+      </div>
+    </sc-for>
+    <div style="flex-grow: 1;"></div>
+    <div style="padding: 0 20px;">
+      <div style="display: flex; align-items: center; gap: 9px; padding: 9px 11px; border: 1px solid #1d2228; border-radius: 4px;">
+        <span style="width: 20px; height: 20px; border-radius: 3px; background: #1d2228; display: flex; align-items: center; justify-content: center;">
+          <span class="mono" style="font-size: 9px; color: #98a2ac;">DL</span>
+        </span>
+        <span style="font-size: 12px; color: #98a2ac;">Dyna Labs</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="flex-grow: 1; min-width: 0; padding: 30px 36px; display: flex; flex-direction: column;">
+
+    <div style="display: flex; align-items: flex-start; gap: 16px;">
+      <div>
+        <div style="font-size: 27px; font-weight: 500; letter-spacing: -0.01em;">Targets</div>
+        <div style="font-size: 14px; color: #98a2ac; margin-top: 5px;">Every candidate is compiled and timed on a real board. These are the boards we can schedule onto.</div>
+      </div>
+      <div style="flex-grow: 1;"></div>
+      <div onClick="{{noop}}" style="border: 1px solid #394149; color: #e6e9ec; border-radius: 4px; padding: 11px 18px; font-size: 14px; cursor: pointer;">Connect a board</div>
+    </div>
+
+    <div style="display: flex; gap: 10px; margin-top: 26px;">
+      <sc-for list="{{stats}}" as="s" hint-placeholder-count="3">
+        <div style="flex-grow: 1; background: #0e1114; border: 1px solid #1d2228; border-radius: 4px; padding: 15px 17px;">
+          <div class="lbl">{{s.k}}</div>
+          <div style="display: flex; align-items: baseline; gap: 6px; margin-top: 8px;">
+            <span class="mono" style="font-size: 26px; font-weight: 500; color: {{s.fg}}; line-height: 1;">{{s.v}}</span>
+            <span class="mono" style="font-size: 12px; color: #626b75;">{{s.u}}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="margin-top: 28px; border: 1px solid #1d2228; border-radius: 4px; overflow: hidden;">
+      <div style="display: flex; align-items: center; padding: 10px 16px; background: #0e1114; border-bottom: 1px solid #1d2228;">
+        <span class="lbl" style="width: 148px;">Runner</span>
+        <span class="lbl" style="flex-grow: 1;">Board</span>
+        <span class="lbl" style="width: 118px;">Belongs to</span>
+        <span class="lbl" style="width: 118px;">State</span>
+        <span class="lbl" style="flex-grow: 1;">Current job</span>
+        <span class="lbl" style="width: 96px; text-align: right;">Queue</span>
+      </div>
+      <sc-for list="{{boards}}" as="b" hint-placeholder-count="5">
+        <div class="brd" style="display: flex; align-items: center; padding: 13px 16px; border-bottom: 1px solid #14181d;">
+          <span class="mono" style="width: 148px; font-size: 12px; color: #e6e9ec;">{{b.id}}</span>
+          <span style="flex-grow: 1; min-width: 0; font-size: 13px; color: #98a2ac;">{{b.board}}</span>
+          <span style="width: 118px; font-size: 12px; color: {{b.ownFg}};">{{b.owner}}</span>
+          <span style="width: 118px; display: flex; align-items: center; gap: 7px;">
+            <span style="width: 6px; height: 6px; border-radius: 50%; background: {{b.dot}}; flex-shrink: 0;"></span>
+            <span style="font-size: 13px; color: {{b.stFg}};">{{b.state}}</span>
+          </span>
+          <span style="flex-grow: 1; min-width: 0; display: flex; align-items: center; gap: 9px;">
+            <span class="mono" style="font-size: 12px; color: {{b.jobFg}}; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{b.job}}</span>
+            <sc-if value="{{b.busy}}" hint-placeholder-val="{{true}}">
+              <div style="width: 62px; height: 4px; background: #171b20; border-radius: 2px; overflow: hidden; flex-shrink: 0;">
+                <div style="height: 100%; width: {{b.pct}}; background: {{b.barFg}}; border-radius: 2px;"></div>
+              </div>
+            </sc-if>
+          </span>
+          <span class="mono" style="width: 96px; text-align: right; font-size: 12px; color: {{b.qFg}};">{{b.queue}}</span>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="display: flex; gap: 14px; margin-top: 20px;">
+      <div style="flex-grow: 1; background: #0e1114; border: 1px solid #1d2228; border-radius: 4px; padding: 15px 17px;">
+        <div class="lbl" style="margin-bottom: 8px;">Why this page exists</div>
+        <div style="font-size: 13px; color: #98a2ac; line-height: 1.55;">
+          A search over 1,284 configurations is 1,284 compiles and timed runs on silicon. Boards are the bottleneck, not GPUs in a datacentre. Connect your own to skip the queue, or rent time on ours.
+        </div>
+      </div>
+      <div style="width: 356px; flex-shrink: 0; background: #0e1114; border: 1px solid #1d2228; border-radius: 4px; padding: 15px 17px;">
+        <div class="lbl" style="margin-bottom: 8px;">Thor is offline</div>
+        <div style="font-size: 13px; color: #98a2ac; line-height: 1.55;">
+          <span class="mono" style="color: #e8b84b;">thor-dev</span> dropped 4 h ago mid-run. The octo-base run is holding its place in the queue and will resume from trial 412.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#ccff4d","options":["#ccff4d","#5fd3e8","#f2b544","#b39cf5"]},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const accent = this.props.accent ?? '#ccff4d';
+
+    const nav = [['Runs', false], ['Configurations', false], ['Targets', true], ['Models', false]].map((n) => ({
+      label: n[0],
+      bg: n[1] ? '#171b20' : 'transparent',
+      mark: n[1] ? accent : 'transparent',
+      fg: n[1] ? '#e6e9ec' : '#98a2ac',
+      dot: n[1] ? accent : '#394149'
+    }));
+
+    const stats = [
+      { k: 'Boards reachable', v: '4', u: 'of 5', fg: '#e8b84b' },
+      { k: 'Jobs waiting', v: '2', u: 'runs queued', fg: '#e6e9ec' },
+      { k: 'Median wait to start', v: '18', u: 'min', fg: '#e6e9ec' }
+    ];
+
+    const defs = [
+      { id: 'orin-nx-lab',  board: 'Jetson Orin NX 16 GB',   owner: 'yours',  state: 'benching', job: 'openvla-7b · #2851', pct: '64%', queue: '—',        kind: 'busy' },
+      { id: 'orin-agx-01',  board: 'Jetson AGX Orin 64 GB',  owner: 'yours',  state: 'idle',     job: '—',                  pct: '0%',  queue: '—',        kind: 'idle' },
+      { id: 'thor-dev',     board: 'Jetson Thor',            owner: 'yours',  state: 'offline 4 h', job: 'lost mid-run',    pct: '0%',  queue: '1 waiting', kind: 'down' },
+      { id: 'farm-nano-07', board: 'Jetson Orin Nano 8 GB',  owner: 'Cadence farm', state: 'benching', job: 'smolvla-450m · #2849', pct: '22%', queue: '—', kind: 'busy' },
+      { id: 'farm-nx-12',   board: 'Jetson Orin NX 16 GB',   owner: 'Cadence farm', state: 'benching', job: 'gr00t-n1 · #2852', pct: '89%', queue: '1 waiting', kind: 'busy' }
+    ];
+    const style = {
+      busy: { dot: accent,    stFg: '#e6e9ec', jobFg: '#98a2ac', barFg: accent,    qFg: '#626b75', busy: true },
+      idle: { dot: '#4a525b', stFg: '#626b75', jobFg: '#4a525b', barFg: '#394149', qFg: '#626b75', busy: false },
+      down: { dot: '#f2685c', stFg: '#f2685c', jobFg: '#e8b84b', barFg: '#394149', qFg: '#e8b84b', busy: false }
+    };
+
+    return {
+      accent, nav, stats,
+      boards: defs.map((b) => Object.assign({}, b, style[b.kind], {
+        ownFg: b.owner === 'yours' ? '#98a2ac' : '#626b75'
+      })),
+      noop: () => {}
+    };
+  }
+}
+</script>
+</body>
+</html>

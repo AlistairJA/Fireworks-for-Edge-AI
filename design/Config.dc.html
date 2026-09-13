@@ -1,0 +1,212 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+  <style>
+    body { margin: 0; background: #0b0d10; }
+    * { box-sizing: border-box; }
+    a { color: #ccff4d; text-decoration: none; }
+    a:hover { color: #e2ff96; }
+    .lbl { font: 500 10px/1 'Barlow Semi Condensed', 'Helvetica Neue', sans-serif; letter-spacing: 0.12em; text-transform: uppercase; color: #626b75; }
+    .mono { font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace; font-variant-numeric: tabular-nums; }
+    .nav:hover { background: #14181d; }
+    .btn:hover { border-color: #4a525b; }
+  </style>
+</helmet>
+
+<div style="--accent: {{accent}}; width: 1440px; height: 900px; background: #0b0d10; color: #e6e9ec; font-family: 'Barlow Semi Condensed', 'Helvetica Neue', sans-serif; display: flex; overflow: hidden;">
+
+  <div style="width: 208px; flex-shrink: 0; background: #0e1114; border-right: 1px solid #1d2228; display: flex; flex-direction: column; padding: 26px 0 18px 0;">
+    <div style="display: flex; align-items: center; gap: 10px; padding: 0 20px; margin-bottom: 30px;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M2 12h4l3-8 5 16 3-8h5"/></svg>
+      <span style="font-size: 15px; font-weight: 600; letter-spacing: 0.14em;">CADENCE</span>
+    </div>
+    <sc-for list="{{nav}}" as="n" hint-placeholder-count="4">
+      <div class="nav" style="display: flex; align-items: center; gap: 11px; padding: 9px 20px; cursor: pointer; background: {{n.bg}}; border-left: 2px solid {{n.mark}};">
+        <span style="width: 14px; height: 14px; flex-shrink: 0; border-radius: 3px; border: 1.5px solid {{n.dot}};"></span>
+        <span style="font-size: 14px; color: {{n.fg}};">{{n.label}}</span>
+      </div>
+    </sc-for>
+    <div style="flex-grow: 1;"></div>
+    <div style="padding: 0 20px;">
+      <div style="display: flex; align-items: center; gap: 9px; padding: 9px 11px; border: 1px solid #1d2228; border-radius: 4px;">
+        <span style="width: 20px; height: 20px; border-radius: 3px; background: #1d2228; display: flex; align-items: center; justify-content: center;">
+          <span class="mono" style="font-size: 9px; color: #98a2ac;">DL</span>
+        </span>
+        <span style="font-size: 12px; color: #98a2ac;">Dyna Labs</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="flex-grow: 1; min-width: 0; padding: 30px 36px; display: flex; flex-direction: column;">
+
+    <div style="display: flex; align-items: flex-start; gap: 16px;">
+      <div style="min-width: 0;">
+        <div style="display: flex; align-items: center; gap: 11px;">
+          <span class="mono" style="font-size: 22px; color: #e6e9ec;">pi0-fast-droid</span>
+          <span style="font-size: 18px; color: #4a525b;">on</span>
+          <span class="mono" style="font-size: 22px; color: #e6e9ec;">orin-nx-16gb</span>
+        </div>
+        <div style="font-size: 14px; color: #98a2ac; margin-top: 6px;">This file is the product. Drop it next to your checkpoint and your runtime builds the fast path.</div>
+      </div>
+      <div style="flex-grow: 1;"></div>
+      <div style="display: flex; gap: 4px;">
+        <sc-for list="{{versions}}" as="v" hint-placeholder-count="3">
+          <div onClick="{{v.pick}}" class="mono" style="padding: 6px 11px; border-radius: 3px; font-size: 12px; cursor: pointer; background: {{v.bg}}; color: {{v.fg}}; border: 1px solid {{v.bd}};">{{v.label}}</div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div style="flex-grow: 1; min-height: 0; display: flex; gap: 16px; margin-top: 24px;">
+
+      <div style="flex-grow: 1; min-width: 0; display: flex; flex-direction: column; background: #0a0c0e; border: 1px solid #1d2228; border-radius: 4px; overflow: hidden;">
+        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 15px; background: #0e1114; border-bottom: 1px solid #1d2228;">
+          <span class="mono" style="font-size: 12px; color: #98a2ac; flex-grow: 1;">cadence.yaml</span>
+          <span class="mono" style="font-size: 11px; color: #626b75;">generated · signed · 4.1 KB</span>
+        </div>
+        <div style="flex-grow: 1; padding: 14px 16px; overflow: hidden;">
+          <sc-for list="{{yaml}}" as="l" hint-placeholder-count="34">
+            <div style="display: flex; gap: 12px;">
+              <span class="mono" style="font-size: 10px; color: #2f363d; width: 16px; text-align: right; flex-shrink: 0;">{{l.n}}</span>
+              <span class="mono" style="font-size: 11.5px; color: {{l.fg}}; white-space: pre; line-height: 1.65;">{{l.t}}</span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+
+      <div style="width: 356px; flex-shrink: 0; display: flex; flex-direction: column;">
+
+        <div style="background: #0e1114; border: 1px solid #1d2228; border-radius: 4px; padding: 17px;">
+          <div class="lbl">Measured against your baseline</div>
+          <div style="display: flex; align-items: baseline; gap: 10px; margin-top: 9px;">
+            <span class="mono" style="font-size: 44px; font-weight: 500; color: var(--accent); line-height: 1;">1.94</span>
+            <span class="mono" style="font-size: 17px; color: #626b75;">×</span>
+            <div style="flex-grow: 1;"></div>
+            <div style="text-align: right;">
+              <div class="mono" style="font-size: 14px;">22.6 → 43.9 Hz</div>
+              <div class="mono" style="font-size: 11px; color: #626b75; margin-top: 3px;">44.2 → 22.8 ms</div>
+            </div>
+          </div>
+          <div style="display: flex; align-items: center; gap: 9px; margin-top: 15px; padding-top: 13px; border-top: 1px solid #1d2228;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5ddb8a" stroke-width="2.2"><path d="M12 2 4 6v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V6z"/></svg>
+            <span class="mono" style="font-size: 14px; color: #5ddb8a;">95.7 %</span>
+            <span style="font-size: 12px; color: #98a2ac;">task success, floor 95.0 %</span>
+          </div>
+        </div>
+
+        <div class="lbl" style="margin-top: 22px; margin-bottom: 10px;">Where the time came from</div>
+        <sc-for list="{{gains}}" as="g" hint-placeholder-count="4">
+          <div style="display: flex; align-items: center; gap: 11px; padding: 8px 0; border-bottom: 1px solid #14181d;">
+            <span style="font-size: 13px; color: #98a2ac; flex-grow: 1;">{{g.k}}</span>
+            <div style="width: 76px; height: 4px; background: #171b20; border-radius: 2px; overflow: hidden;">
+              <div style="height: 100%; width: {{g.pct}}; background: {{g.fg}}; border-radius: 2px;"></div>
+            </div>
+            <span class="mono" style="font-size: 13px; color: #e6e9ec; width: 56px; text-align: right;">{{g.v}}</span>
+          </div>
+        </sc-for>
+
+        <div style="flex-grow: 1;"></div>
+
+        <div style="background: #0e1114; border: 1px solid #1d2228; border-radius: 4px; padding: 12px 14px; margin-bottom: 12px;">
+          <div class="lbl" style="margin-bottom: 7px;">Reproduce it</div>
+          <div class="mono" style="font-size: 11px; color: #98a2ac; line-height: 1.6; white-space: pre-wrap;">cadence verify \
+  --config cadence.yaml \
+  --board orin-nx-lab</div>
+        </div>
+
+        <div onClick="{{noop}}" style="background: var(--accent); color: #0b0d10; border-radius: 4px; padding: 13px; text-align: center; font-size: 15px; font-weight: 600; cursor: pointer;">
+          Download config + engine bundle
+        </div>
+        <div class="btn" onClick="{{noop}}" style="border: 1px solid #394149; color: #e6e9ec; border-radius: 4px; padding: 11px; text-align: center; font-size: 14px; cursor: pointer; margin-top: 7px;">
+          Pin as production for this board
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#ccff4d","options":["#ccff4d","#5fd3e8","#f2b544","#b39cf5"]},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) { super(props); this.state = { v: 'v3' }; }
+  renderVals() {
+    const accent = this.props.accent ?? '#ccff4d';
+
+    const nav = [['Runs', false], ['Configurations', true], ['Targets', false], ['Models', false]].map((n) => ({
+      label: n[0],
+      bg: n[1] ? '#171b20' : 'transparent',
+      mark: n[1] ? accent : 'transparent',
+      fg: n[1] ? '#e6e9ec' : '#98a2ac',
+      dot: n[1] ? accent : '#394149'
+    }));
+
+    const raw = [
+      ['# produced by cadence · run #2847 · 12,480 timed cycles', 'c'],
+      ['# 1.94x vs your baseline · task success 95.7% (floor 95.0%)', 'c'],
+      ['version: 3', 'k'],
+      ['', 'p'],
+      ['target:', 'k'],
+      ['  board: jetson-orin-nx-16gb', 'p'],
+      ['  jetpack: "6.1"', 'p'],
+      ['  power_mode: 25W', 'p'],
+      ['  clocks: pinned', 'p'],
+      ['', 'p'],
+      ['precision:', 'k'],
+      ['  vision_tower:    int8      # per-channel, 512-sample calib', 'p'],
+      ['  token_projector: fp16', 'p'],
+      ['  backbone:        w4a16     # AWQ, group 128', 'p'],
+      ['  action_expert:   fp16      # precision-sensitive, left alone', 'p'],
+      ['', 'p'],
+      ['speculative_decoding:', 'k'],
+      ['  draft_head: 2L-384         # distilled from the backbone', 'p'],
+      ['  gamma: 4', 'p'],
+      ['  acceptance: 0.81           # output-identical, no accuracy cost', 'p'],
+      ['', 'p'],
+      ['placement:', 'k'],
+      ['  vision_view_a: dla0', 'p'],
+      ['  vision_view_b: dla1        # was serial on the GPU', 'p'],
+      ['  backbone:      gpu', 'p'],
+      ['  action_expert: gpu', 'p'],
+      ['  graph_capture: full_cycle  # 41 launches -> 3', 'p'],
+      ['', 'p'],
+      ['fused_kernels:               # preview', 'k'],
+      ['  arch: sm_87', 'p'],
+      ['  accepted: 11', 'p'],
+      ['', 'p'],
+      ['guard:', 'k'],
+      ['  suite: [libero-long, rollouts-240]', 'p'],
+      ['  floor: 95.0', 'p'],
+      ['  measured: 95.7', 'p']
+    ];
+    const FG = { c: '#4f5a52', k: '#e6e9ec', p: '#98a2ac' };
+    const yaml = raw.map((l, i) => ({ n: i + 1, t: l[0], fg: FG[l[1]] }));
+
+    const gains = [
+      { k: 'Quantization', v: '7.9 ms', pct: '100%' },
+      { k: 'Scaling across the chip', v: '6.2 ms', pct: '78%' },
+      { k: 'Kernel fusion', v: '4.4 ms', pct: '56%' },
+      { k: 'Speculative decoding', v: '2.9 ms', pct: '37%' }
+    ].map((g) => Object.assign({}, g, { fg: accent }));
+
+    return {
+      accent, nav, yaml, gains,
+      versions: ['v1', 'v2', 'v3'].map((v) => ({
+        label: v,
+        bg: this.state.v === v ? '#1d2228' : 'transparent',
+        fg: this.state.v === v ? '#e6e9ec' : '#626b75',
+        bd: this.state.v === v ? '#394149' : '#1d2228',
+        pick: () => this.setState({ v: v })
+      })),
+      noop: () => {}
+    };
+  }
+}
+</script>
+</body>
+</html>

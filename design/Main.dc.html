@@ -13,89 +13,149 @@
     * { box-sizing: border-box; }
     a { color: #ccff4d; text-decoration: none; }
     a:hover { color: #e2ff96; }
-    .lbl { font: 500 11px/1 'Barlow Semi Condensed', 'Helvetica Neue', sans-serif; letter-spacing: 0.12em; text-transform: uppercase; color: #626b75; }
+    .lbl { font: 500 10px/1 'Barlow Semi Condensed', 'Helvetica Neue', sans-serif; letter-spacing: 0.12em; text-transform: uppercase; color: #626b75; }
     .mono { font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace; font-variant-numeric: tabular-nums; }
-    .hw:hover { border-color: #4a525b; }
+    .nav:hover { background: #14181d; }
+    .run:hover { background: #13171b; }
   </style>
 </helmet>
 
-<div style="--accent: {{accent}}; width: 1440px; height: 900px; background: #0b0d10; color: #e6e9ec; font-family: 'Barlow Semi Condensed', 'Helvetica Neue', sans-serif; display: flex; flex-direction: column; overflow: hidden; position: relative;">
+<div style="--accent: {{accent}}; width: 1440px; height: 900px; background: #0b0d10; color: #e6e9ec; font-family: 'Barlow Semi Condensed', 'Helvetica Neue', sans-serif; display: flex; overflow: hidden;">
 
-  <div style="position: absolute; top: 34px; left: 40px; display: flex; align-items: center; gap: 10px;">
-    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M2 12h4l3-8 5 16 3-8h5"/></svg>
-    <span style="font-size: 16px; font-weight: 600; letter-spacing: 0.14em;">CADENCE</span>
+  <div style="width: 208px; flex-shrink: 0; background: #0e1114; border-right: 1px solid #1d2228; display: flex; flex-direction: column; padding: 26px 0 18px 0;">
+    <div style="display: flex; align-items: center; gap: 10px; padding: 0 20px; margin-bottom: 30px;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M2 12h4l3-8 5 16 3-8h5"/></svg>
+      <span style="font-size: 15px; font-weight: 600; letter-spacing: 0.14em;">CADENCE</span>
+    </div>
+    <sc-for list="{{nav}}" as="n" hint-placeholder-count="4">
+      <div class="nav" style="display: flex; align-items: center; gap: 11px; padding: 9px 20px; cursor: pointer; background: {{n.bg}}; border-left: 2px solid {{n.mark}};">
+        <span style="width: 14px; height: 14px; flex-shrink: 0; border-radius: 3px; border: 1.5px solid {{n.dot}};"></span>
+        <span style="font-size: 14px; color: {{n.fg}};">{{n.label}}</span>
+      </div>
+    </sc-for>
+    <div style="flex-grow: 1;"></div>
+    <div style="padding: 0 20px;">
+      <div style="display: flex; align-items: center; gap: 9px; padding: 9px 11px; border: 1px solid #1d2228; border-radius: 4px;">
+        <span style="width: 20px; height: 20px; border-radius: 3px; background: #1d2228; display: flex; align-items: center; justify-content: center;">
+          <span class="mono" style="font-size: 9px; color: #98a2ac;">DL</span>
+        </span>
+        <span style="font-size: 12px; color: #98a2ac;">Dyna Labs</span>
+      </div>
+    </div>
   </div>
 
-  <div style="flex-grow: 1; display: flex; align-items: center; justify-content: center;">
-    <div style="width: 720px;">
+  <div style="flex-grow: 1; min-width: 0; padding: 30px 36px; display: flex; flex-direction: column;">
 
-      <div style="font-size: 42px; font-weight: 500; line-height: 1.12; letter-spacing: -0.02em; text-wrap: pretty;">
-        Your policy is too slow<br>on the robot you already built.
+    <div style="display: flex; align-items: flex-start; gap: 16px;">
+      <div>
+        <div style="font-size: 27px; font-weight: 500; letter-spacing: -0.01em;">Runs</div>
+        <div style="font-size: 14px; color: #98a2ac; margin-top: 5px;">Each run takes one model and one board and returns a configuration.</div>
       </div>
-      <div style="font-size: 17px; color: #98a2ac; line-height: 1.5; margin-top: 16px; text-wrap: pretty;">
-        Point us at a checkpoint and tell us which board it has to run on. We time it there, then beat that number — without giving up task success.
-      </div>
-
-      <div style="margin-top: 44px;">
-        <div class="lbl">Your model</div>
-        <div style="display: flex; align-items: center; gap: 12px; background: #121519; border: 1px solid #2c333b; border-radius: 4px; padding: 15px 16px; margin-top: 9px;">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#626b75" stroke-width="1.8"><path d="M21 16V8l-9-5-9 5v8l9 5 9-5z"/><path d="M3.3 7.5 12 12.5l8.7-5M12 22V12.5"/></svg>
-          <span class="mono" style="font-size: 15px; flex-grow: 1;">physical-intelligence/pi0-fast-droid</span>
-          <span class="mono" style="font-size: 12px; color: #5ddb8a;">3.3 B · VLA</span>
-        </div>
-      </div>
-
-      <div style="margin-top: 26px;">
-        <div class="lbl">Your hardware</div>
-        <div style="display: flex; gap: 10px; margin-top: 9px;">
-          <sc-for list="{{boards}}" as="b" hint-placeholder-count="3">
-            <div class="hw" onClick="{{b.pick}}" style="flex-grow: 1; flex-basis: 0; background: {{b.bg}}; border: 1px solid {{b.bd}}; border-radius: 4px; padding: 14px 15px; cursor: pointer;">
-              <div style="font-size: 15px; color: {{b.fg}};">{{b.name}}</div>
-              <div class="mono" style="font-size: 12px; color: #626b75; margin-top: 6px;">{{b.spec}}</div>
-            </div>
-          </sc-for>
-        </div>
-      </div>
-
-      <div onClick="{{noop}}" style="background: var(--accent); color: #0b0d10; border-radius: 4px; padding: 17px; text-align: center; font-size: 17px; font-weight: 600; cursor: pointer; margin-top: 30px;">
-        Measure it, then make it faster
-      </div>
-
-      <div style="display: flex; align-items: center; gap: 9px; margin-top: 16px; justify-content: center;">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#5ddb8a" stroke-width="2.4"><path d="M12 2 4 6v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V6z"/></svg>
-        <span style="font-size: 13px; color: #98a2ac;">Nothing ships that drops task success below the floor you set.</span>
-      </div>
-
+      <div style="flex-grow: 1;"></div>
+      <div onClick="{{noop}}" style="background: var(--accent); color: #0b0d10; border-radius: 4px; padding: 11px 20px; font-size: 14px; font-weight: 600; cursor: pointer;">New run</div>
     </div>
+
+    <div style="display: flex; gap: 10px; margin-top: 26px;">
+      <sc-for list="{{stats}}" as="s" hint-placeholder-count="3">
+        <div style="flex-grow: 1; background: #0e1114; border: 1px solid #1d2228; border-radius: 4px; padding: 15px 17px;">
+          <div class="lbl">{{s.k}}</div>
+          <div style="display: flex; align-items: baseline; gap: 6px; margin-top: 8px;">
+            <span class="mono" style="font-size: 26px; font-weight: 500; color: {{s.fg}}; line-height: 1;">{{s.v}}</span>
+            <span class="mono" style="font-size: 12px; color: #626b75;">{{s.u}}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="display: flex; gap: 4px; margin-top: 28px;">
+      <sc-for list="{{filters}}" as="f" hint-placeholder-count="4">
+        <div onClick="{{f.pick}}" style="padding: 6px 13px; border-radius: 3px; font-size: 13px; cursor: pointer; background: {{f.bg}}; color: {{f.fg}};">{{f.label}}</div>
+      </sc-for>
+    </div>
+
+    <div style="margin-top: 12px; border: 1px solid #1d2228; border-radius: 4px; overflow: hidden;">
+      <div style="display: flex; align-items: center; padding: 10px 16px; background: #0e1114; border-bottom: 1px solid #1d2228;">
+        <span class="lbl" style="flex-grow: 1;">Model</span>
+        <span class="lbl" style="width: 210px;">Target board</span>
+        <span class="lbl" style="width: 132px;">Status</span>
+        <span class="lbl" style="width: 92px; text-align: right;">Speedup</span>
+        <span class="lbl" style="width: 128px; text-align: right;">Task success</span>
+        <span class="lbl" style="width: 96px; text-align: right;">Finished</span>
+      </div>
+      <sc-for list="{{runs}}" as="r" hint-placeholder-count="6">
+        <div class="run" style="display: flex; align-items: center; padding: 13px 16px; border-bottom: 1px solid #14181d; cursor: pointer;">
+          <span class="mono" style="flex-grow: 1; min-width: 0; font-size: 13px; color: #e6e9ec; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">{{r.model}}</span>
+          <span style="width: 210px; font-size: 13px; color: #98a2ac;">{{r.board}}</span>
+          <span style="width: 132px; display: flex; align-items: center; gap: 7px;">
+            <span style="width: 6px; height: 6px; border-radius: 50%; background: {{r.dot}}; flex-shrink: 0;"></span>
+            <span style="font-size: 13px; color: {{r.stFg}};">{{r.status}}</span>
+          </span>
+          <span class="mono" style="width: 92px; text-align: right; font-size: 15px; color: {{r.spdFg}};">{{r.speedup}}</span>
+          <span style="width: 128px; text-align: right;">
+            <span class="mono" style="font-size: 13px; color: {{r.succFg}};">{{r.success}}</span>
+          </span>
+          <span class="mono" style="width: 96px; text-align: right; font-size: 12px; color: #626b75;">{{r.when}}</span>
+        </div>
+      </sc-for>
+    </div>
+
+    <div style="display: flex; align-items: flex-start; gap: 10px; margin-top: 18px; padding: 12px 15px; border: 1px solid #4a2926; background: #150f10; border-radius: 4px;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#f2685c" stroke-width="2.2" style="flex-shrink: 0; margin-top: 1px;"><path d="M12 2 4 6v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V6z"/></svg>
+      <div>
+        <span style="font-size: 14px; color: #f2685c;">smolvla-450m hit 2.41× and we threw it away.</span>
+        <span style="font-size: 14px; color: #98a2ac;"> Task success fell to 91.2 %, under your 95 % floor. The next best config that held the floor was 1.55× — run it instead, or lower the floor deliberately.</span>
+      </div>
+    </div>
+
   </div>
 </div>
 </x-dc>
 
 <script data-dc-script data-props='{"accent":{"editor":"color","default":"#ccff4d","options":["#ccff4d","#5fd3e8","#f2b544","#b39cf5"]},"$preview":{"width":1440,"height":900}}'>
 class Component extends DCLogic {
-  constructor(props) {
-    super(props);
-    this.state = { board: 'nx' };
-  }
+  constructor(props) { super(props); this.state = { filter: 'All' }; }
   renderVals() {
     const accent = this.props.accent ?? '#ccff4d';
-    const defs = [
-      { id: 'nx', name: 'Jetson Orin NX', spec: '16 GB · 100 TOPS' },
-      { id: 'agx', name: 'Jetson AGX Orin', spec: '64 GB · 275 TOPS' },
-      { id: 'rb5', name: 'Qualcomm QRB5165', spec: '8 GB · 15 TOPS' }
+
+    const nav = [['Runs', true], ['Configurations', false], ['Targets', false], ['Models', false]].map((n) => ({
+      label: n[0],
+      bg: n[1] ? '#171b20' : 'transparent',
+      mark: n[1] ? accent : 'transparent',
+      fg: n[1] ? '#e6e9ec' : '#98a2ac',
+      dot: n[1] ? accent : '#394149'
+    }));
+
+    const stats = [
+      { k: 'Median speedup, all runs', v: '1.79', u: '×', fg: accent },
+      { k: 'Configurations shipped', v: '9', u: 'across 4 boards', fg: '#e6e9ec' },
+      { k: 'Boards available to bench on', v: '3', u: 'of 5', fg: '#e8b84b' }
     ];
+
+    const all = [
+      { model: 'pi0-fast-droid', board: 'Jetson Orin NX 16 GB', status: 'done', speedup: '1.94×', success: '95.7 %', when: '2 h ago', kind: 'ok' },
+      { model: 'pi0-fast-droid', board: 'Jetson AGX Orin 64 GB', status: 'done', speedup: '1.62×', success: '96.0 %', when: 'yesterday', kind: 'ok' },
+      { model: 'openvla-7b', board: 'Jetson Orin NX 16 GB', status: 'running · 64 %', speedup: '1.71×', success: '—', when: '—', kind: 'run' },
+      { model: 'smolvla-450m', board: 'Jetson Orin Nano 8 GB', status: 'guard failed', speedup: '2.41×', success: '91.2 %', when: '3 d ago', kind: 'bad' },
+      { model: 'octo-base', board: 'Jetson Thor', status: 'queued', speedup: '—', success: '—', when: '—', kind: 'idle' },
+      { model: 'gr00t-n1', board: 'Jetson AGX Orin 64 GB', status: 'done', speedup: '1.38×', success: '95.1 %', when: 'last week', kind: 'ok' }
+    ];
+    const style = {
+      ok:   { dot: '#5ddb8a', stFg: '#98a2ac', spdFg: accent,    succFg: '#5ddb8a' },
+      run:  { dot: accent,    stFg: '#e6e9ec', spdFg: '#98a2ac', succFg: '#626b75' },
+      bad:  { dot: '#f2685c', stFg: '#f2685c', spdFg: '#4a525b', succFg: '#f2685c' },
+      idle: { dot: '#4a525b', stFg: '#626b75', spdFg: '#4a525b', succFg: '#626b75' }
+    };
+    const keep = { All: () => true, Running: (r) => r.kind === 'run', Done: (r) => r.kind === 'ok', Rejected: (r) => r.kind === 'bad' };
+    const runs = all.filter(keep[this.state.filter] || keep.All).map((r) => Object.assign({}, r, style[r.kind]));
+
     return {
-      accent,
-      boards: defs.map((b) => {
-        const on = this.state.board === b.id;
-        return {
-          name: b.name, spec: b.spec,
-          bg: on ? '#171b20' : '#0e1114',
-          bd: on ? accent : '#2c333b',
-          fg: on ? '#e6e9ec' : '#98a2ac',
-          pick: () => this.setState({ board: b.id })
-        };
-      }),
+      accent, nav, stats, runs,
+      filters: ['All', 'Running', 'Done', 'Rejected'].map((f) => ({
+        label: f,
+        bg: this.state.filter === f ? '#1d2228' : 'transparent',
+        fg: this.state.filter === f ? '#e6e9ec' : '#626b75',
+        pick: () => this.setState({ filter: f })
+      })),
       noop: () => {}
     };
   }
