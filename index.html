@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Runs · Cadence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<div class="app">
+<nav class="sidebar">
+  <a class="brand" href="index.html"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M2 12h4l3-8 5 16 3-8h5"/></svg><span>CADENCE</span></a>
+  <a class="nav-item active" href="index.html"><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 12h4l3-7 4 14 3-7h4"/></svg>Runs</a><a class="nav-item" href="configurations.html"><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5"/><path d="M9 13h7M9 17h5"/></svg>Configurations</a><a class="nav-item" href="targets.html"><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="7" width="10" height="10" rx="1"/><path d="M10 3v4M14 3v4M10 17v4M14 17v4M3 10h4M3 14h4M17 10h4M17 14h4"/></svg>Targets</a><a class="nav-item" href="kernels.html"><svg class="ico" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 5 3 12l5 7M16 5l5 7-5 7"/></svg>Kernel bench</a>
+  <div class="spacer"></div>
+  <div class="org"><span class="avatar">DL</span>Dyna Labs</div>
+</nav>
+<main class="main">
+
+<div class="page-head">
+  <div>
+    <h1 class="page-title">Runs</h1>
+    <p class="page-sub">Each run takes one model and one board and returns a configuration.</p>
+  </div>
+  <div class="spacer"></div>
+  <a class="btn btn-primary" href="new-run.html">New run</a>
+</div>
+
+<div class="stats">
+  <div class="stat"><div class="lbl">Median speedup, all runs</div><div class="stat-v" style="color:var(--accent)">1.79<span class="stat-u">×</span></div></div>
+  <div class="stat"><div class="lbl">Configurations shipped</div><div class="stat-v">9<span class="stat-u">across 4 boards</span></div></div>
+  <div class="stat"><div class="lbl">Boards available to bench on</div><div class="stat-v" style="color:var(--warn)">3<span class="stat-u">of 5</span></div></div>
+</div>
+
+<div class="tabs" data-tabs="#runs">
+  <button class="tab active" data-filter="all">All</button>
+  <button class="tab" data-filter="running">Running</button>
+  <button class="tab" data-filter="done">Done</button>
+  <button class="tab" data-filter="rejected">Rejected</button>
+</div>
+
+<div class="table table-scroll" id="runs">
+  <div class="thead">
+    <span class="lbl" style="flex-grow:1">Model</span>
+    <span class="lbl" style="width:210px">Target board</span>
+    <span class="lbl" style="width:132px">Status</span>
+    <span class="lbl" style="width:92px;text-align:right">Speedup</span>
+    <span class="lbl" style="width:128px;text-align:right">Task success</span>
+    <span class="lbl" style="width:96px;text-align:right">Finished</span>
+  </div>
+  <a class="trow" data-kind="done" href="result.html">
+    <span class="mono" style="flex-grow:1;min-width:0;font-size:13px;color:var(--ink)">pi0-fast-droid</span>
+    <span style="width:210px;font-size:13px;color:var(--ink-2)">Jetson Orin NX 16 GB</span>
+    <span class="status" style="width:132px"><span class="pip" style="background:var(--good)"></span><span style="font-size:13px;color:var(--ink-2)">done</span></span>
+    <span class="mono" style="width:92px;text-align:right;font-size:15px;color:var(--accent)">1.94×</span>
+    <span class="mono" style="width:128px;text-align:right;font-size:13px;color:var(--good)">95.7 %</span>
+    <span class="mono" style="width:96px;text-align:right;font-size:12px;color:var(--ink-3)">2 h ago</span>
+  </a>
+  <a class="trow" data-kind="done" href="result.html">
+    <span class="mono" style="flex-grow:1;min-width:0;font-size:13px;color:var(--ink)">pi0-fast-droid</span>
+    <span style="width:210px;font-size:13px;color:var(--ink-2)">Jetson AGX Orin 64 GB</span>
+    <span class="status" style="width:132px"><span class="pip" style="background:var(--good)"></span><span style="font-size:13px;color:var(--ink-2)">done</span></span>
+    <span class="mono" style="width:92px;text-align:right;font-size:15px;color:var(--accent)">1.62×</span>
+    <span class="mono" style="width:128px;text-align:right;font-size:13px;color:var(--good)">96.0 %</span>
+    <span class="mono" style="width:96px;text-align:right;font-size:12px;color:var(--ink-3)">yesterday</span>
+  </a>
+  <a class="trow" data-kind="running" href="running.html">
+    <span class="mono" style="flex-grow:1;min-width:0;font-size:13px;color:var(--ink)">openvla-7b</span>
+    <span style="width:210px;font-size:13px;color:var(--ink-2)">Jetson Orin NX 16 GB</span>
+    <span class="status" style="width:132px"><span class="pip" style="background:var(--accent)"></span><span style="font-size:13px;color:var(--ink-2)">running · 64 %</span></span>
+    <span class="mono" style="width:92px;text-align:right;font-size:15px;color:var(--ink-2)">1.71×</span>
+    <span class="mono" style="width:128px;text-align:right;font-size:13px;color:var(--ink-3)">—</span>
+    <span class="mono" style="width:96px;text-align:right;font-size:12px;color:var(--ink-3)">—</span>
+  </a>
+  <a class="trow" data-kind="rejected" href="#">
+    <span class="mono" style="flex-grow:1;min-width:0;font-size:13px;color:var(--ink)">smolvla-450m</span>
+    <span style="width:210px;font-size:13px;color:var(--ink-2)">Jetson Orin Nano 8 GB</span>
+    <span class="status" style="width:132px"><span class="pip" style="background:var(--crit)"></span><span style="font-size:13px;color:var(--crit)">guard failed</span></span>
+    <span class="mono" style="width:92px;text-align:right;font-size:15px;color:var(--ink-4)">2.41×</span>
+    <span class="mono" style="width:128px;text-align:right;font-size:13px;color:var(--crit)">91.2 %</span>
+    <span class="mono" style="width:96px;text-align:right;font-size:12px;color:var(--ink-3)">3 d ago</span>
+  </a>
+  <a class="trow" data-kind="running" href="running.html">
+    <span class="mono" style="flex-grow:1;min-width:0;font-size:13px;color:var(--ink)">octo-base</span>
+    <span style="width:210px;font-size:13px;color:var(--ink-2)">Jetson Thor</span>
+    <span class="status" style="width:132px"><span class="pip" style="background:var(--ink-4)"></span><span style="font-size:13px;color:var(--ink-2)">queued</span></span>
+    <span class="mono" style="width:92px;text-align:right;font-size:15px;color:var(--ink-4)">—</span>
+    <span class="mono" style="width:128px;text-align:right;font-size:13px;color:var(--ink-3)">—</span>
+    <span class="mono" style="width:96px;text-align:right;font-size:12px;color:var(--ink-3)">—</span>
+  </a>
+  <a class="trow" data-kind="done" href="result.html">
+    <span class="mono" style="flex-grow:1;min-width:0;font-size:13px;color:var(--ink)">gr00t-n1</span>
+    <span style="width:210px;font-size:13px;color:var(--ink-2)">Jetson AGX Orin 64 GB</span>
+    <span class="status" style="width:132px"><span class="pip" style="background:var(--good)"></span><span style="font-size:13px;color:var(--ink-2)">done</span></span>
+    <span class="mono" style="width:92px;text-align:right;font-size:15px;color:var(--accent)">1.38×</span>
+    <span class="mono" style="width:128px;text-align:right;font-size:13px;color:var(--good)">95.1 %</span>
+    <span class="mono" style="width:96px;text-align:right;font-size:12px;color:var(--ink-3)">last week</span>
+  </a>
+</div>
+
+<div class="note bad">
+  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--crit)" stroke-width="2.2"><path d="M12 2 4 6v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V6z"/></svg>
+  <div><span style="color:var(--crit)">smolvla-450m hit 2.41× and we threw it away.</span>
+  Task success fell to 91.2 %, under your 95 % floor. The next best config that held the floor was 1.55× — run that instead, or lower the floor deliberately.</div>
+</div>
+</main>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>

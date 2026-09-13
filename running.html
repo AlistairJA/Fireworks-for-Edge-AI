@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Working · Cadence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/app.css">
+</head>
+<body>
+<div class="flow">
+<div class="crumbs">
+  <a class="brand" href="index.html" style="margin:0;padding:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M2 12h4l3-8 5 16 3-8h5"/></svg><span>CADENCE</span></a>
+  <span style="color:var(--ink-4)">/</span>
+  <a href="index.html">Runs</a>
+</div>
+<div class="flow-body"><div class="flow-col">
+
+<div class="lbl">Faster than your baseline, so far</div>
+<div style="display:flex;align-items:baseline;gap:14px;margin-top:10px;flex-wrap:wrap">
+  <span class="hero-num" style="font-size:82px">1.71</span>
+  <span class="mono" style="font-size:28px;color:var(--ink-3)">×</span>
+  <div class="spacer"></div>
+  <div style="text-align:right">
+    <div class="mono" style="font-size:20px">44.2 → 25.8 ms</div>
+    <div class="mono" style="font-size:13px;color:var(--ink-3);margin-top:4px">per control cycle</div>
+  </div>
+</div>
+
+<div style="height:1px;background:var(--rule-2);margin:32px 0 26px"></div>
+  <div style="margin-bottom:17px">
+    <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
+      <span style="font-size:16px;color:var(--ink);min-width:200px">Quantization</span>
+      <span class="mono" style="font-size:13px;color:var(--ink-3);flex-grow:1">per-module precision, guarded on success</span>
+      <span class="mono" style="font-size:16px;color:var(--accent)">−7.9 ms</span>
+    </div>
+    <div class="bar" style="height:5px;margin-top:9px"><i style="width:100%;background:var(--accent)"></i></div>
+  </div>
+  <div style="margin-bottom:17px">
+    <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
+      <span style="font-size:16px;color:var(--ink);min-width:200px">Speculative decoding</span>
+      <span class="mono" style="font-size:13px;color:var(--ink-3);flex-grow:1">draft head, length 4, acceptance 0.81</span>
+      <span class="mono" style="font-size:16px;color:var(--accent)">−2.9 ms</span>
+    </div>
+    <div class="bar" style="height:5px;margin-top:9px"><i style="width:100%;background:var(--accent)"></i></div>
+  </div>
+  <div style="margin-bottom:17px">
+    <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
+      <span style="font-size:16px;color:var(--ink);min-width:200px">Scaling across the chip</span>
+      <span class="mono" style="font-size:13px;color:var(--ink-3);flex-grow:1">both camera views moved onto the idle DLAs</span>
+      <span class="mono" style="font-size:16px;color:var(--accent)">−4.1 ms</span>
+    </div>
+    <div class="bar" style="height:5px;margin-top:9px"><i style="width:64%;background:#8aab3a"></i></div>
+  </div>
+  <div style="margin-bottom:17px">
+    <div style="display:flex;align-items:baseline;gap:12px;flex-wrap:wrap">
+      <span style="font-size:16px;color:var(--ink-3);min-width:200px">Kernel fusion</span>
+      <span class="mono" style="font-size:13px;color:var(--ink-3);flex-grow:1">queued — 218 candidates to compile and race</span>
+      <span class="mono" style="font-size:16px;color:var(--ink-4)">queued</span>
+    </div>
+    <div class="bar" style="height:5px;margin-top:9px"><i style="width:0%;background:var(--raised)"></i></div>
+  </div>
+
+<div style="height:1px;background:var(--rule-2);margin:30px 0 0"></div>
+
+<div style="display:flex;align-items:center;gap:26px;margin-top:20px;flex-wrap:wrap">
+  <div><div class="lbl">Configs measured</div><div class="mono" style="font-size:20px;margin-top:6px">847</div></div>
+  <div><div class="lbl">Rejected on accuracy</div><div class="mono" style="font-size:20px;margin-top:6px;color:var(--warn)">289</div></div>
+  <div><div class="lbl">Task success held</div><div class="mono" style="font-size:20px;margin-top:6px;color:var(--good)">95.8 %</div></div>
+  <div class="spacer"></div>
+  <div style="text-align:right"><div class="lbl">Time left</div><div class="mono" style="font-size:20px;margin-top:6px">~41 min</div></div>
+</div>
+
+<p style="font-size:13px;color:var(--ink-3);margin-top:22px;line-height:1.5">
+  Every candidate is compiled and timed on the real board. Nothing here is estimated from a cost model.
+</p>
+<a class="btn btn-block" style="margin-top:22px" href="result.html">Skip to the finished run →</a>
+
+</div></div>
+</div>
+<script src="assets/app.js"></script>
+</body>
+</html>
