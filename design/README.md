@@ -1,48 +1,59 @@
-# Cadence Console — product UI design
+# Cadence Console — MVP demo UI
 
-Four interactive artboards for a hardware-aware profiler and optimizer for
-embodied-model inference. The loop they describe:
+Product UI for a hardware-aware profiler and optimizer for embodied-model
+inference. Built to be shown, not to be exhaustive: you hand over a
+checkpoint and name the board it has to run on, we time it there, and we
+beat that number.
 
-1. **Intake** (`Main.dc.html`) — point at a checkpoint, name the board it has
-   to run on, declare what we're beating and the task-success floor.
-2. **Baseline** (`Baseline.dc.html`) — the model measured untouched on that
-   board. This is the benchmark; everything downstream is relative to it.
-3. **Optimize** (`Optimize.dc.html`) — four search loops (auto-quantization,
-   auto speculative decoding, auto scaling, fused kernel bench) and the
-   speedup against the baseline. Passes toggle; the waterfall recomputes.
-4. **Kernel bench** (`Kernels.dc.html`) — per-op candidate leaderboard, the
-   numerics gate, generated kernel source, and search convergence.
+## Demo flow (canvas page 1)
 
-`canvas.json` lays the artboards out and sets the launch view.
+1. **`Main.dc.html`** — one model input, three hardware tiles, one button.
+2. **`Optimizing.dc.html`** — four search loops running, speedup climbing,
+   configs rejected on accuracy shown alongside configs tried.
+3. **`Result.dc.html`** — the speedup against the baseline, before/after
+   control rate, and four plain-English rows for what changed. Each row
+   toggles; the number recomputes.
+
+## Under the hood (canvas page 2)
+
+**`Kernels.dc.html`** — per-op candidate leaderboard, numerics gate,
+generated kernel source, search convergence. Deliberately off the main
+flow: it answers "how do you get the last few milliseconds", which is a
+follow-up question, not the pitch.
+
+`canvas.json` lays out both pages and opens on the demo flow.
 
 ## Status
 
 Design mockup. "CADENCE" is a placeholder product name. The figures are
 plausible for a ~3.3B VLA on a Jetson Orin NX but are illustrative, not
-measured.
+measured — replace them with a real run before showing this to anyone.
 
 ## Rebuilding the canvas
 
-The artboards are the source. The published bundle is generated and
-gitignored. Reseed it with the `design` skill's helper:
+The artboards are the source; the published bundle is generated and
+gitignored. Reseed with the `design` skill's helper:
 
 ```
 node <skill>/seed-canvas.mjs \
   --template <skill>/payload.template.html \
   --out cadence-console.html \
   --title "Cadence Console" \
-  --artboard Main.dc.html --artboard Baseline.dc.html \
-  --artboard Optimize.dc.html --artboard Kernels.dc.html \
+  --artboard Main.dc.html --artboard Optimizing.dc.html \
+  --artboard Result.dc.html --artboard Kernels.dc.html \
   --canvas canvas.json
 ```
 
-Then check it with `--check cadence-console.html` before publishing.
+Then `--check cadence-console.html` before publishing.
 
 ## Palette
 
-Dark instrument panel. The five categorical series colours
-(`#0099c4 #c26f00 #956ed2 #2e9e52 #c35c9b`) pass lightness-band, chroma,
-CVD-separation, normal-vision and contrast checks as a set against the dark
-surface. Status colours (`#5ddb8a #e8b84b #f2685c`) are reserved and always
-ship with an icon or label, never colour alone. `#ccff4d` is chrome-only
-(primary action, focus, active nav) and is never used as a data series.
+Dark, near-neutral ground with a single lime accent (`#ccff4d`) reserved
+for chrome — primary action, focus, active state — and never used as a
+data series. Status colours (`#5ddb8a` good, `#e8b84b` warning, `#f2685c`
+critical) always ship with an icon or label, never colour alone.
+
+The kernel-bench screen additionally uses a five-slot categorical series
+palette (`#0099c4 #c26f00 #956ed2 #2e9e52 #c35c9b`), validated as a set
+against the dark surface for lightness band, chroma floor, colour-vision
+separation, normal-vision separation and contrast.

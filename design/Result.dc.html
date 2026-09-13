@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+  <style>
+    body { margin: 0; background: #0b0d10; }
+    * { box-sizing: border-box; }
+    a { color: #ccff4d; text-decoration: none; }
+    a:hover { color: #e2ff96; }
+    .lbl { font: 500 11px/1 'Barlow Semi Condensed', 'Helvetica Neue', sans-serif; letter-spacing: 0.12em; text-transform: uppercase; color: #626b75; }
+    .mono { font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace; font-variant-numeric: tabular-nums; }
+    .row:hover { background: #13171b; }
+  </style>
+</helmet>
+
+<div style="--accent: {{accent}}; width: 1440px; height: 900px; background: #0b0d10; color: #e6e9ec; font-family: 'Barlow Semi Condensed', 'Helvetica Neue', sans-serif; display: flex; flex-direction: column; overflow: hidden; position: relative;">
+
+  <div style="position: absolute; top: 34px; left: 40px; display: flex; align-items: center; gap: 10px;">
+    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M2 12h4l3-8 5 16 3-8h5"/></svg>
+    <span style="font-size: 16px; font-weight: 600; letter-spacing: 0.14em;">CADENCE</span>
+  </div>
+  <div style="position: absolute; top: 36px; right: 40px;">
+    <span class="mono" style="font-size: 12px; color: #626b75;">pi0-fast-droid on Jetson Orin NX 16 GB</span>
+  </div>
+
+  <div style="flex-grow: 1; display: flex; align-items: center; justify-content: center;">
+    <div style="width: 760px;">
+
+      <div class="lbl">Faster than your own baseline</div>
+      <div style="display: flex; align-items: baseline; gap: 16px; margin-top: 8px;">
+        <span class="mono" style="font-size: 104px; font-weight: 500; color: var(--accent); line-height: 0.95;">{{speedup}}</span>
+        <span class="mono" style="font-size: 34px; color: #626b75;">×</span>
+      </div>
+
+      <!-- before / after -->
+      <div style="display: flex; gap: 40px; margin-top: 30px;">
+        <div style="flex-grow: 1;">
+          <div class="lbl">Control rate</div>
+          <div style="display: flex; align-items: baseline; gap: 10px; margin-top: 8px;">
+            <span class="mono" style="font-size: 19px; color: #626b75;">22.6</span>
+            <svg width="17" height="10" viewBox="0 0 18 10" fill="none" stroke="#3d444c" stroke-width="1.6"><path d="M0 5h15M12 1.5 15.5 5 12 8.5"/></svg>
+            <span class="mono" style="font-size: 30px; color: #5ddb8a; line-height: 1;">{{hz}}</span>
+            <span class="mono" style="font-size: 14px; color: #626b75;">Hz</span>
+          </div>
+          <div style="position: relative; height: 6px; background: #171b20; border-radius: 3px; margin-top: 12px;">
+            <div style="position: absolute; left: 0; top: 0; height: 100%; width: {{hzPct}}; background: #5ddb8a; border-radius: 3px;"></div>
+            <div style="position: absolute; left: 50%; top: -4px; bottom: -4px; border-left: 1px dashed #626b75;"></div>
+            <span class="mono" style="position: absolute; left: 50%; top: 11px; margin-left: 5px; font-size: 10px; color: #626b75;">30 Hz — what you needed</span>
+          </div>
+        </div>
+        <div style="width: 250px; flex-shrink: 0;">
+          <div class="lbl">Per control cycle</div>
+          <div style="display: flex; align-items: baseline; gap: 10px; margin-top: 8px;">
+            <span class="mono" style="font-size: 19px; color: #626b75;">44.2</span>
+            <svg width="17" height="10" viewBox="0 0 18 10" fill="none" stroke="#3d444c" stroke-width="1.6"><path d="M0 5h15M12 1.5 15.5 5 12 8.5"/></svg>
+            <span class="mono" style="font-size: 30px; color: #e6e9ec; line-height: 1;">{{ms}}</span>
+            <span class="mono" style="font-size: 14px; color: #626b75;">ms</span>
+          </div>
+          <div class="mono" style="font-size: 12px; color: #626b75; margin-top: 15px;">on the same board, same power budget</div>
+        </div>
+      </div>
+
+      <div style="height: 1px; background: #2c333b; margin: 32px 0 20px 0;"></div>
+
+      <div style="display: flex; align-items: baseline; gap: 10px;">
+        <span class="lbl">What we changed</span>
+        <span class="mono" style="font-size: 11px; color: #4a525b;">toggle any of it off</span>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 2px; margin-top: 12px;">
+        <sc-for list="{{passes}}" as="p" hint-placeholder-count="4">
+          <div class="row" onClick="{{p.toggle}}" style="display: flex; align-items: center; gap: 14px; padding: 11px 12px; border-radius: 3px; cursor: pointer; border: 1px solid {{p.bd}}; background: {{p.bg}};">
+            <span style="width: 30px; height: 17px; border-radius: 9px; background: {{p.trackBg}}; border: 1px solid {{p.trackBd}}; position: relative; flex-shrink: 0;">
+              <span style="position: absolute; top: 2px; left: {{p.knob}}; width: 11px; height: 11px; border-radius: 50%; background: {{p.knobBg}};"></span>
+            </span>
+            <span style="font-size: 15px; color: {{p.fg}}; width: 212px;">{{p.name}}</span>
+            <span style="font-size: 13px; color: #98a2ac; flex-grow: 1; min-width: 0;">{{p.note}}</span>
+            <span class="mono" style="font-size: 15px; color: {{p.gainFg}}; flex-shrink: 0;">{{p.gain}}</span>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="display: flex; align-items: center; gap: 12px; margin-top: 24px; padding: 13px 15px; background: {{guard.bg}}; border: 1px solid {{guard.bd}}; border-radius: 4px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="{{guard.fg}}" stroke-width="2.2"><path d="M12 2 4 6v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V6z"/></svg>
+        <span style="font-size: 15px; color: {{guard.fg}};">{{guard.title}}</span>
+        <span class="mono" style="font-size: 15px; color: {{guard.fg}};">{{guard.value}} %</span>
+        <span style="font-size: 13px; color: #98a2ac;">task success, against 96.2 % before. Your floor was 95.0 %.</span>
+      </div>
+
+      <div style="display: flex; gap: 10px; margin-top: 26px;">
+        <div onClick="{{noop}}" style="flex-grow: 1; background: var(--accent); color: #0b0d10; border-radius: 4px; padding: 15px; text-align: center; font-size: 16px; font-weight: 600; cursor: pointer;">
+          Deploy to your board
+        </div>
+        <div onClick="{{noop}}" style="width: 250px; border: 1px solid #394149; color: #e6e9ec; border-radius: 4px; padding: 14px; text-align: center; font-size: 15px; cursor: pointer;">
+          Download engine bundle
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#ccff4d","options":["#ccff4d","#5fd3e8","#f2b544","#b39cf5"]},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { on: { q: true, s: true, c: true, k: true } };
+  }
+  renderVals() {
+    const accent = this.props.accent ?? '#ccff4d';
+    const S = this.state.on;
+    const BASE = 44.2;
+
+    const defs = [
+      { id: 'q', name: 'Quantization', ms: 7.9, succ: 0.4, note: '4-bit backbone, 8-bit vision, action head left alone' },
+      { id: 's', name: 'Speculative decoding', ms: 2.9, succ: 0.0, note: 'a small draft head guesses ahead; output is identical' },
+      { id: 'c', name: 'Scaling across the chip', ms: 6.2, succ: 0.0, note: 'both camera views moved onto the two idle DLAs' },
+      { id: 'k', name: 'Kernel fusion', ms: 4.4, succ: 0.1, note: '11 fused kernels written and raced on your board' }
+    ];
+
+    const active = defs.filter((d) => S[d.id]);
+    const after = BASE - active.reduce((a, d) => a + d.ms, 0);
+    const succ = 96.2 - active.reduce((a, d) => a + d.succ, 0);
+    const hz = 1000 / after;
+    const guardOk = succ >= 95.0;
+
+    return {
+      accent,
+      speedup: (BASE / after).toFixed(2),
+      ms: after.toFixed(1),
+      hz: hz.toFixed(1),
+      hzPct: Math.min(100, hz / 60 * 100).toFixed(1) + '%',
+      passes: defs.map((d) => {
+        const on = S[d.id];
+        return {
+          name: d.name, note: d.note,
+          gain: on ? '−' + d.ms.toFixed(1) + ' ms' : 'off',
+          gainFg: on ? accent : '#4a525b',
+          fg: on ? '#e6e9ec' : '#626b75',
+          bg: on ? '#101317' : 'transparent',
+          bd: on ? '#222831' : '#161a1f',
+          trackBg: on ? accent : '#1d2228',
+          trackBd: on ? accent : '#394149',
+          knob: on ? '16px' : '2px',
+          knobBg: on ? '#0b0d10' : '#626b75',
+          toggle: () => {
+            const next = Object.assign({}, this.state.on);
+            next[d.id] = !next[d.id];
+            this.setState({ on: next });
+          }
+        };
+      }),
+      guard: {
+        title: guardOk ? 'Guard held —' : 'Guard breached —',
+        value: succ.toFixed(1),
+        fg: guardOk ? '#5ddb8a' : '#f2685c',
+        bg: guardOk ? '#0f1511' : '#150f10',
+        bd: guardOk ? '#2a4430' : '#4a2926'
+      },
+      noop: () => {}
+    };
+  }
+}
+</script>
+</body>
+</html>

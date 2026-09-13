@@ -1,12 +1,17 @@
 {
+  "pages": [
+    { "id": "page-1", "name": "Demo flow" },
+    { "id": "page-2", "name": "Under the hood" }
+  ],
   "artboards": [
-    { "file": "Main.dc.html",     "title": "1 · Intake — your model, your board",  "x": 0,    "y": 0,    "w": 1440, "h": 900, "is_interactive": true },
-    { "file": "Baseline.dc.html", "title": "2 · Baseline — the number to beat",     "x": 1560, "y": 0,    "w": 1440, "h": 900, "is_interactive": true },
-    { "file": "Optimize.dc.html", "title": "3 · Optimize — speedup vs your baseline","x": 0,    "y": 1060, "w": 1440, "h": 900, "is_interactive": true },
-    { "file": "Kernels.dc.html",  "title": "4 · Kernel bench — the last few ms",    "x": 1560, "y": 1060, "w": 1440, "h": 900, "is_interactive": true }
+    { "file": "Main.dc.html",       "title": "1 · Your model, your board", "page": "page-1", "x": 0,    "y": 0, "w": 1440, "h": 900, "is_interactive": true },
+    { "file": "Optimizing.dc.html", "title": "2 · Working",                "page": "page-1", "x": 1560, "y": 0, "w": 1440, "h": 900, "is_interactive": true },
+    { "file": "Result.dc.html",     "title": "3 · The number",             "page": "page-1", "x": 3120, "y": 0, "w": 1440, "h": 900, "is_interactive": true },
+    { "file": "Kernels.dc.html",    "title": "If they ask how",            "page": "page-2", "x": 0,    "y": 0, "w": 1440, "h": 900, "is_interactive": true }
   ],
   "annotations": [
-    { "id": "loop", "x": 0, "y": -150, "w": 700, "text": "The loop, left to right: you hand over a checkpoint and name the board it has to run on. We measure it there untouched — that becomes the benchmark. Four search loops then try to beat it, and every candidate is re-timed on the real board.\n\n\"CADENCE\" is a placeholder name. Numbers are plausible for a 3.3B VLA on an Orin NX but they are illustrative, not measured." }
+    { "id": "pitch", "x": 0, "y": -140, "w": 640, "page": "page-1", "text": "Three beats: what you give us, us working, the number. Toggle the rows on screen 3 to show the optimizer is really composing four separate wins.\n\n\"CADENCE\" is a placeholder name. Figures are plausible for a 3.3B VLA on an Orin NX but are illustrative, not measured." },
+    { "id": "depth", "x": 0, "y": -140, "w": 640, "page": "page-2", "text": "Kept off the main flow on purpose. This is the answer to \"but how do you actually get the last few milliseconds\" — don't lead with it." }
   ],
-  "launch": { "view": "canvas" }
+  "launch": { "view": "canvas", "page": "page-1" }
 }

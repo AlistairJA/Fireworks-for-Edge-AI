@@ -1,0 +1,117 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap">
+  <style>
+    body { margin: 0; background: #0b0d10; }
+    * { box-sizing: border-box; }
+    a { color: #ccff4d; text-decoration: none; }
+    a:hover { color: #e2ff96; }
+    .lbl { font: 500 11px/1 'Barlow Semi Condensed', 'Helvetica Neue', sans-serif; letter-spacing: 0.12em; text-transform: uppercase; color: #626b75; }
+    .mono { font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace; font-variant-numeric: tabular-nums; }
+  </style>
+</helmet>
+
+<div style="--accent: {{accent}}; width: 1440px; height: 900px; background: #0b0d10; color: #e6e9ec; font-family: 'Barlow Semi Condensed', 'Helvetica Neue', sans-serif; display: flex; flex-direction: column; overflow: hidden; position: relative;">
+
+  <div style="position: absolute; top: 34px; left: 40px; display: flex; align-items: center; gap: 10px;">
+    <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M2 12h4l3-8 5 16 3-8h5"/></svg>
+    <span style="font-size: 16px; font-weight: 600; letter-spacing: 0.14em;">CADENCE</span>
+  </div>
+  <div style="position: absolute; top: 36px; right: 40px; display: flex; align-items: center; gap: 8px;">
+    <span style="width: 7px; height: 7px; border-radius: 50%; background: var(--accent);"></span>
+    <span class="mono" style="font-size: 12px; color: #98a2ac;">running on orin-nx-lab</span>
+  </div>
+
+  <div style="flex-grow: 1; display: flex; align-items: center; justify-content: center;">
+    <div style="width: 720px;">
+
+      <div class="lbl">Faster than your baseline, so far</div>
+      <div style="display: flex; align-items: baseline; gap: 14px; margin-top: 10px;">
+        <span class="mono" style="font-size: 82px; font-weight: 500; color: var(--accent); line-height: 1;">1.71</span>
+        <span class="mono" style="font-size: 28px; color: #626b75;">×</span>
+        <div style="flex-grow: 1;"></div>
+        <div style="text-align: right;">
+          <div class="mono" style="font-size: 20px;">44.2 → 25.8 ms</div>
+          <div class="mono" style="font-size: 13px; color: #626b75; margin-top: 4px;">per control cycle</div>
+        </div>
+      </div>
+
+      <div style="height: 1px; background: #2c333b; margin: 32px 0 26px 0;"></div>
+
+      <div style="display: flex; flex-direction: column; gap: 17px;">
+        <sc-for list="{{passes}}" as="p" hint-placeholder-count="4">
+          <div>
+            <div style="display: flex; align-items: baseline; gap: 12px;">
+              <span style="font-size: 16px; color: {{p.fg}}; width: 250px;">{{p.name}}</span>
+              <span class="mono" style="font-size: 13px; color: #626b75; flex-grow: 1;">{{p.note}}</span>
+              <span class="mono" style="font-size: 16px; color: {{p.gainFg}};">{{p.gain}}</span>
+            </div>
+            <div style="height: 5px; background: #171b20; border-radius: 3px; margin-top: 9px; overflow: hidden;">
+              <div style="height: 100%; width: {{p.pct}}; background: {{p.barFg}}; border-radius: 3px;"></div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="height: 1px; background: #2c333b; margin: 30px 0 0 0;"></div>
+
+      <div style="display: flex; align-items: center; gap: 26px; margin-top: 20px;">
+        <div>
+          <div class="lbl">Configs measured</div>
+          <div class="mono" style="font-size: 20px; margin-top: 6px;">847</div>
+        </div>
+        <div>
+          <div class="lbl">Rejected on accuracy</div>
+          <div class="mono" style="font-size: 20px; margin-top: 6px; color: #e8b84b;">289</div>
+        </div>
+        <div>
+          <div class="lbl">Task success held</div>
+          <div class="mono" style="font-size: 20px; margin-top: 6px; color: #5ddb8a;">95.8 %</div>
+        </div>
+        <div style="flex-grow: 1;"></div>
+        <div style="text-align: right;">
+          <div class="lbl">Time left</div>
+          <div class="mono" style="font-size: 20px; margin-top: 6px;">~41 min</div>
+        </div>
+      </div>
+
+      <div style="font-size: 13px; color: #626b75; margin-top: 22px; line-height: 1.5;">
+        Every candidate is compiled and timed on the real board. Nothing here is estimated from a cost model.
+      </div>
+
+    </div>
+  </div>
+</div>
+</x-dc>
+
+<script data-dc-script data-props='{"accent":{"editor":"color","default":"#ccff4d","options":["#ccff4d","#5fd3e8","#f2b544","#b39cf5"]},"$preview":{"width":1440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const accent = this.props.accent ?? '#ccff4d';
+    const defs = [
+      { name: 'Quantization', note: 'per-module precision, guarded on success', pct: '100%', gain: '−7.9 ms', done: true },
+      { name: 'Speculative decoding', note: 'draft head, length 4, acceptance 0.81', pct: '100%', gain: '−2.9 ms', done: true },
+      { name: 'Scaling across the chip', note: 'both camera views moved onto the idle DLAs', pct: '64%', gain: '−4.1 ms', done: false },
+      { name: 'Kernel fusion', note: 'queued — 218 candidates to compile and race', pct: '0%', gain: 'queued', done: false }
+    ];
+    return {
+      accent,
+      passes: defs.map((p) => ({
+        name: p.name, note: p.note, pct: p.pct, gain: p.gain,
+        fg: p.pct === '0%' ? '#626b75' : '#e6e9ec',
+        gainFg: p.pct === '0%' ? '#4a525b' : accent,
+        barFg: p.done ? accent : (p.pct === '0%' ? '#171b20' : '#8aab3a')
+      }))
+    };
+  }
+}
+</script>
+</body>
+</html>
